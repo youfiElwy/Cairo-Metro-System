@@ -11,4 +11,3 @@ const config = {
 
 module.exports = require('knex')(config);
   
-//test2
