@@ -22,6 +22,8 @@ const user_forgot_password_new_password_route = require('./apis/user_forgot_pass
 const get_user_subscription_route = require('./apis/subscriptions/get_user_subscription');
 const pay_for_subscription_route = require('./apis/subscriptions/pay_for_subscription');
 const pay_for_ticket_route = require('./apis/tickets/pay_for_ticket');
+const rideStarted = require('./apis/ride/simulate_ride_start');
+const rideEnded = require('./apis/ride/simulate_ride_end');
 
 // all routes
 signup_route(app);
@@ -35,6 +37,8 @@ user_forgot_password_new_password_route(app);
 get_user_subscription_route(app);
 pay_for_subscription_route(app);
 pay_for_ticket_route(app);
+rideStarted(app);
+rideEnded(app);
 
 app.use(function (req, res, next) {
 	return res
