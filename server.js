@@ -41,20 +41,20 @@ const delete_users_route = require('./apis/delete_user');
 // });
 
 // UPDATE ALL USERS
-app.put('/api/v1/users/', async (req, res) => {
-	try {
-		const usertype = req.body.usertype;
-		const updatedUser = await db('users')
-			.update({
-				usertype,
-			})
-			.returning('*');
-		return res.status(200).json(updatedUser);
-	} catch (err) {
-		console.log('error message', err.message);
-		return res.status(400).send('Could not update user');
-	}
-});
+// app.put('/api/v1/users/', async (req, res) => {
+// 	try {
+// 		const usertype = req.body.usertype;
+// 		const updatedUser = await db('users')
+// 			.update({
+// 				usertype,
+// 			})
+// 			.returning('*');
+// 		return res.status(200).json(updatedUser);
+// 	} catch (err) {
+// 		console.log('error message', err.message);
+// 		return res.status(400).send('Could not update user');
+// 	}
+// });
 
 // all routes
 signup_route(app);
