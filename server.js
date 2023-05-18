@@ -12,7 +12,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const signup_route = require('./apis/user_sign_up');
 const login_route = require('./apis/user_login');
 const refund_request_route = require('./apis/user_refund_request');
-const get_users = require('./apis/get_users');
+const get_users_route = require('./apis/get_users');
+const delete_users_route = require('./apis/delete_user');
 
 // CREATE USER
 // app.post('/api/v1/users/signup', async function (req, res) {
@@ -39,19 +40,6 @@ const get_users = require('./apis/get_users');
 // 	}
 // });
 
-// DELETE USER
-app.delete('/api/v1/users/:userId', async (req, res) => {
-	try {
-		const { userId } = req.params;
-		const deletedUser = await db('users').where('user_id', userId).del().returning('*');
-		console.log('deleted', deletedUser);
-		return res.status(200).json(deletedUser);
-	} catch (err) {
-		console.log('error message', err.message);
-		return res.status(400).send('failed to delete user');
-	}
-});
-
 // UPDATE ALL USERS
 app.put('/api/v1/users/', async (req, res) => {
 	try {
@@ -72,7 +60,8 @@ app.put('/api/v1/users/', async (req, res) => {
 signup_route(app);
 login_route(app);
 refund_request_route(app);
-get_users(app);
+get_users_route(app);
+delete_users_route(app);
 
 app.use(function (req, res, next) {
 	return res.status(404).render('404');
