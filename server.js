@@ -12,20 +12,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const signup_route = require('./apis/user_sign_up');
 const login_route = require('./apis/user_login');
 const refund_request_route = require('./apis/user_refund_request');
-
-app.get('/', function (req, res) {
-	return res.send('Welcome to localhost:3000');
-});
-
-app.get('/', async function (req, res) {
-	try {
-		const users = await db.select('*').from('users');
-		return res.status(200).send(users);
-	} catch (err) {
-		console.log('error message', err.message);
-		return res.status(400).send('Could not get users');
-	}
-});
+const get_users = require('./apis/get_users');
 
 // CREATE USER
 // app.post('/api/v1/users/signup', async function (req, res) {
@@ -65,6 +52,7 @@ app.delete('/api/v1/users/:userId', async (req, res) => {
 	}
 });
 
+// UPDATE ALL USERS
 app.put('/api/v1/users/', async (req, res) => {
 	try {
 		const usertype = req.body.usertype;
@@ -84,6 +72,7 @@ app.put('/api/v1/users/', async (req, res) => {
 signup_route(app);
 login_route(app);
 refund_request_route(app);
+get_users(app);
 
 app.use(function (req, res, next) {
 	return res.status(404).render('404');
