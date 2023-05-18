@@ -6,7 +6,7 @@ module.exports = function (app) {
 	app.use(bodyParser.json());
 	app.use(bodyParser.urlencoded({ extended: true }));
 
-	app.put('/api/v1/users/forgot_password/new_password/:token', async function (req, res) {
+	app.put('/api/v1/password/reset/new_password/:token', async function (req, res) {
 		try {
 			const { password } = req.body;
 			console.log(password);

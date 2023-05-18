@@ -17,47 +17,9 @@ const delete_users_route = require('./apis/delete_user');
 const user_forgot_password_route = require('./apis/user_forgot_password');
 const user_forgot_password_verify_route = require('./apis/user_forgot_password_verify');
 const user_forgot_password_new_password_route = require('./apis/user_forgot_password_new_password');
-
-// CREATE USER
-// app.post('/api/v1/users/signup', async function (req, res) {
-// 	try {
-// 		const { user_id, username, email, password, birthdate, age, gender, phone, ssn, usertype } =
-// 			req.body;
-// 		let newUser = {
-// 			user_id,
-// 			username,
-// 			email,
-// 			password,
-// 			birthdate,
-// 			age,
-// 			gender,
-// 			phone,
-// 			ssn,
-// 			usertype,
-// 		};
-// 		const addedUser = await db('users').insert(newUser).returning('*');
-// 		return res.status(201).json(addedUser);
-// 	} catch (err) {
-// 		console.log('error message', err.message);
-// 		return res.status(400).send(err.message);
-// 	}
-// });
-
-// UPDATE ALL USERS
-app.put('/api/v1/users/', async (req, res) => {
-	try {
-		const usertype = req.body.usertype;
-		const updatedUser = await db('users')
-			.update({
-				usertype,
-			})
-			.returning('*');
-		return res.status(200).json(updatedUser);
-	} catch (err) {
-		console.log('error message', err.message);
-		return res.status(400).send('Could not update user');
-	}
-});
+const get_user_subscription_route = require('./apis/subscriptions/get_user_subscription');
+const pay_for_subscription_route = require('./apis/subscriptions/pay_for_subscription');
+const pay_for_ticket_route = require('./apis/tickets/pay_for_ticket');
 
 // all routes
 signup_route(app);
@@ -68,9 +30,14 @@ delete_users_route(app);
 user_forgot_password_route(app);
 user_forgot_password_verify_route(app);
 user_forgot_password_new_password_route(app);
+get_user_subscription_route(app);
+pay_for_subscription_route(app);
+pay_for_ticket_route(app);
 
 app.use(function (req, res, next) {
-	return res.status(404).send('----------ERROR MALA2ENASH AY PAGE!!-----------');
+	return res
+		.status(404)
+		.send('----------  ERROR COULD NOT FIND YOUR SPECIFIED ROUTE  -----------');
 });
 
 app.listen(3000, () => {

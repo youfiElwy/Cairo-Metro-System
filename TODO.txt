@@ -1,1 +1,6 @@
 1) In the userforgotpassword route i should send the userid within the link as a parameter. USING THE SESSION
+
+2) when paying for subscription in the pay_for_subscription file:
+   what data do i put in zones.
+   IF duration == monthlu then e3mel this duration. FEL FRONTEND
+
