@@ -13,19 +13,19 @@ const signup_route = require('./apis/user_sign_up');
 const login_route = require('./apis/user_login');
 const refund_request_route = require('./apis/user_refund_request');
 
-// app.get('/', function (req, res) {
-// 	return res.send('Welcome to localhost:3000');
-// });
+app.get('/', function (req, res) {
+	return res.send('Welcome to localhost:3000');
+});
 
-// app.get('/', async function (req, res) {
-// 	try {
-// 		const users = await db.select('*').from('users');
-// 		return res.status(200).send(users);
-// 	} catch (err) {
-// 		console.log('error message', err.message);
-// 		return res.status(400).send('Could not get users');
-// 	}
-// });
+app.get('/', async function (req, res) {
+	try {
+		const users = await db.select('*').from('users');
+		return res.status(200).send(users);
+	} catch (err) {
+		console.log('error message', err.message);
+		return res.status(400).send('Could not get users');
+	}
+});
 
 // CREATE USER
 // app.post('/api/v1/users/signup', async function (req, res) {
