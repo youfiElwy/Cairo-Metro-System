@@ -3,6 +3,10 @@ const db = require('../db');
 const bodyParser = require('body-parser');
 // package for creating a unique password token
 const crypto = require('crypto');
+// Package for sending emails
+const sgMail = require('@sendgrid/mail');
+const SENDGRID_API_KEY = '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';
+sgMail.setApiKey(SENDGRID_API_KEY);
 
 module.exports = function (app) {
 	app.use(bodyParser.json());
@@ -37,6 +41,16 @@ module.exports = function (app) {
 			});
 			// Send an email to the user containing THIS link with the token
 			const resetLink = `http://localhost:3000/api/v1/users/forgot_password/verify?token=${token}`;
+
+			// Send email using SendGrid
+			// const msg = {
+			// 	to: 'youfielwy@gmail.com',
+			// 	from: 'youfielwy@gmail.com',
+			// 	subject: 'Password Reset',
+			// 	text: `Click the following link to reset your password: ${resetLink}`,
+			// 	html: `Click the following link to reset your password: <a href="${resetLink}">${resetLink}</a>`,
+			// };
+			// sgMail.send(msg);
 
 			return res.status(200).send(resetLink);
 		} catch (err) {
