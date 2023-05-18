@@ -6,3 +6,5 @@
 
 3) when i send an email. lazem ageb el actual email beta3t el user. 3ahsan ana right now
    bab3at kol mara default-ly to youfielwy@...
+
+4) shof el session leh msh sha8ala
