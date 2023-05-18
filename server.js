@@ -14,6 +14,9 @@ const login_route = require('./apis/user_login');
 const refund_request_route = require('./apis/user_refund_request');
 const get_users_route = require('./apis/get_users');
 const delete_users_route = require('./apis/delete_user');
+const user_forgot_password_route = require('./apis/user_forgot_password');
+const user_forgot_password_verify_route = require('./apis/user_forgot_password_verify');
+const user_forgot_password_new_password_route = require('./apis/user_forgot_password_new_password');
 
 // CREATE USER
 // app.post('/api/v1/users/signup', async function (req, res) {
@@ -41,20 +44,20 @@ const delete_users_route = require('./apis/delete_user');
 // });
 
 // UPDATE ALL USERS
-// app.put('/api/v1/users/', async (req, res) => {
-// 	try {
-// 		const usertype = req.body.usertype;
-// 		const updatedUser = await db('users')
-// 			.update({
-// 				usertype,
-// 			})
-// 			.returning('*');
-// 		return res.status(200).json(updatedUser);
-// 	} catch (err) {
-// 		console.log('error message', err.message);
-// 		return res.status(400).send('Could not update user');
-// 	}
-// });
+app.put('/api/v1/users/', async (req, res) => {
+	try {
+		const usertype = req.body.usertype;
+		const updatedUser = await db('users')
+			.update({
+				usertype,
+			})
+			.returning('*');
+		return res.status(200).json(updatedUser);
+	} catch (err) {
+		console.log('error message', err.message);
+		return res.status(400).send('Could not update user');
+	}
+});
 
 // all routes
 signup_route(app);
@@ -62,9 +65,12 @@ login_route(app);
 refund_request_route(app);
 get_users_route(app);
 delete_users_route(app);
+user_forgot_password_route(app);
+user_forgot_password_verify_route(app);
+user_forgot_password_new_password_route(app);
 
 app.use(function (req, res, next) {
-	return res.status(404).render('404');
+	return res.status(404).send('----------ERROR MALA2ENASH AY PAGE!!-----------');
 });
 
 app.listen(3000, () => {
