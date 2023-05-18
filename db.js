@@ -4,9 +4,10 @@ const config = {
 		host: 'localhost',
 		port: 5432,
 		user: 'postgres',
-		password: 'Stecki10',
-		database: 'Metro_System_Semester_4_Projekt',
+		password: '1q2w3e4r',
+		database: 'postgres',
 	},
 };
 
 module.exports = require('knex')(config);
+  
