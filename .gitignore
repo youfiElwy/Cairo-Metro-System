@@ -8,8 +8,5 @@ node_modules/
 # Ignore TODO files
 TODO
 
-# Ignore Installed_packages.txt
-Installed_packages.txt
-
 # Ignore .env file
 .env
