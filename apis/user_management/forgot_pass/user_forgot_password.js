@@ -1,5 +1,5 @@
 const { isEmpty } = require('lodash');
-const db = require('../db');
+const db = require('../../../db');
 const bodyParser = require('body-parser');
 // package for creating a unique password token
 const crypto = require('crypto');

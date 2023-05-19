@@ -1,5 +1,5 @@
 const { isEmpty } = require('lodash');
-const db = require('../db');
+const db = require('../../../db');
 
 // Package for sending emails
 const sgMail = require('@sendgrid/mail');

@@ -1,5 +1,5 @@
 const { isEmpty } = require('lodash');
-const db = require('../db');
+const db = require('../../../db');
 const bodyParser = require('body-parser');
 
 module.exports = function (app) {
