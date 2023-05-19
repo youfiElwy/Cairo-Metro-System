@@ -1,5 +1,15 @@
-node_modules
-TODO.txt
-.env
+# Ignore package.json and package-lock.json
 package.json
 package-lock.json
+
+# Ignore the entire node_modules directory
+node_modules/
+
+# Ignore TODO files
+TODO
+
+# Ignore Installed_packages.txt
+Installed_packages.txt
+
+# Ignore .env file
+.env
