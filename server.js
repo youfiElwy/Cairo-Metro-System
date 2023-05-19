@@ -43,7 +43,7 @@ rideEnded(app);
 app.use(function (req, res, next) {
 	return res
 		.status(404)
-		.send('----------  ERROR COULD NOT FIND YOUR SPECIFIED ROUTE  -----------');
+		.send('----------  ERROR COULD NOT FIND YOUR SPECIFIED ROUTE/PAGE  -----------');
 });
 
 app.listen(3000, () => {
