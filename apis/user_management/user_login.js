@@ -29,27 +29,23 @@ module.exports = function (app) {
 		if (user.password !== password) {
 			return res.status(401).send('Password does not match');
 		}
-		return res.status(200).send('login successful');
+		//return res.status(200).send('login successful');
 
+		// SESSION STUFF
 		// set the expiry time as 15 minutes after the current time
 		const token = v4();
-		console.log('here is token');
-		console.log(token);
-		console.log('here is token');
 		const currentDateTime = new Date();
 		const expiresAt = new Date(+currentDateTime + 180000); // expire in 3 minutes
-		console.log(expiresAt);
 
 		// create a session containing information about the user and expiry time
 		const session = {
-			user_id: user.id,
+			user_id: user.user_id,
 			token,
 			expiresAt,
 		};
+
 		try {
-			console.log('INSWERTERDDD');
 			await db('sessions').insert(session);
-			console.log('INSWERTERDDD');
 			// In the response, set a cookie on the client with the name "session_cookie"
 			// and the value as the UUID we generated. We also set the expiration time.
 			return res
