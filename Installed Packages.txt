@@ -1,8 +1,0 @@
-npm install express
-npm install body-parser
-npm install hjs
-npm install knex
-npm install lodash
-npm install pg
-npm install uuid
-npm install @sendgrid/mail
