@@ -25,7 +25,7 @@ const pay_for_ticket_route = require('./apis/user_tickets/pay_for_ticket');
 const rideStarted = require('./apis/user_rides/simulate_ride_start');
 const rideEnded = require('./apis/user_rides/simulate_ride_end');
 
-// all routes
+// ALL ROUTES
 signup_route(app);
 login_route(app);
 refund_request_route(app);
