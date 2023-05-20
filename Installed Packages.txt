@@ -6,3 +6,7 @@ npm install lodash
 npm install pg
 npm install uuid
 npm install @sendgrid/mail
+
+
+extra:
+dotenv
