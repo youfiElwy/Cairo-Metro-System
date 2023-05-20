@@ -13,7 +13,7 @@ module.exports = function (app) {
 	// if everything is in check
 	// then we inform the user that he is valid aw auhenticated.
 	// then he sends an update request with his new password
-	app.get('/api/v1/password/reset/verify', async function (req, res) {
+	app.get('/api/v1/users/forgot_password/verify', async function (req, res) {
 		const { token } = req.query;
 		try {
 			const user = await db('users').where('reset_token', token).first();
@@ -25,7 +25,7 @@ module.exports = function (app) {
 		}
 
 		// this link will have the actual token and will have a req body that takes the new password
-		const newPasswordPage = `http://localhost:3000/api/v1/password/reset/new_password/${token}`;
+		const newPasswordPage = `http://localhost:3000/api/v1/users/forgot_password/new_password/${token}`;
 
 		const msg = {
 			to: 'youfielwy@gmail.com',

@@ -29,7 +29,7 @@ module.exports = function (app) {
 		if (user.password !== password) {
 			return res.status(401).send('Password does not match');
 		}
-		//return res.status(200).send('login successful');
+		return res.status(200).send('login successful');
 
 		// SESSION STUFF
 		// set the expiry time as 15 minutes after the current time

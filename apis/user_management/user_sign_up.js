@@ -11,7 +11,7 @@ module.exports = function (app) {
 	app.use(bodyParser.json());
 	app.use(bodyParser.urlencoded({ extended: true }));
 	// Register HTTP endpoint to create new user
-	app.post('/api/v1/users/', async function (req, res) {
+	app.post('/api/v1/users/signup', async function (req, res) {
 		// Check if user already exists in the system
 		const userExists = await db.select('*').from('users').where('email', req.body.email);
 		if (!isEmpty(userExists)) {

@@ -12,7 +12,7 @@ module.exports = function (app) {
 	app.use(bodyParser.json());
 	app.use(bodyParser.urlencoded({ extended: true }));
 
-	app.post('/api/v1/password/reset', async function (req, res) {
+	app.post('/api/v1/users/forgot_password', async function (req, res) {
 		const { email } = req.body;
 		// Perform verification based on SSN and email IN DATABASE => LATER, use email!
 		if (!email) {
@@ -33,7 +33,7 @@ module.exports = function (app) {
 				reset_token_expiration: resetTokenExpiration, // Expiration time: 1 hour from now
 			});
 			// Send an email to the user containing THIS link with the token
-			const resetLink = `http://localhost:3000/api/v1/password/reset/verify?token=${token}`;
+			const resetLink = `http://localhost:3000/api/v1/users/forgot_password/verify?token=${token}`;
 
 			const msg = {
 				to: 'youfielwy@gmail.com',
