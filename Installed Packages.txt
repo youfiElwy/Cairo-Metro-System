@@ -10,3 +10,7 @@ npm install @sendgrid/mail
 
 extra:
 dotenv
+
+
+i can use "npm install" to download all modules into the "node_modules" folder
+for that i have to have the package.json file
