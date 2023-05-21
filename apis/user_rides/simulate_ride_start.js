@@ -7,34 +7,37 @@ module.exports = function (app) {
 	app.use(bodyParser.urlencoded({ extended: true }));
 
 	app.put('/api/v1/user/:userId/ride/simulate/start', async function (req, res) {
-		const { rideId } = req.body;
+		const { ticket_id } = req.body;
 		const { userId } = req.params;
 
-		if (!rideId) {
-			return res.status(400).send('Ride ID is required');
+		if (!ticket_id) {
+			return res.status(400).send('Ticket ID is required');
 		}
-		const rideExists = await db
+		const ticketExists = await db
 			.select('*')
-			.from('ride')
-			.where('ride_id', rideId)
+			.from('ticket')
+			.where('ticket_id', ticket_id)
 			.andWhere('user_id', userId);
 
-		if (isEmpty(rideExists)) {
-			return res.status(400).send('Invalid Ride');
+		if (isEmpty(ticketExists)) {
+			return res.status(400).send('Invalid Ticket');
 		}
 		const rideNotStartedYet = await db
 			.select('*')
-			.from('ride')
-			.where('ride_id', rideId)
-			.andWhere('user_id', userId)
-			.whereNotIn('status', ['ended', 'in_progress']);
+			.from('ticket')
+			.innerJoin('ride', 'ticket.ticket_id', 'ride.ticket_id')
+			.where('user_id', userId)
+			.whereNotIn('ride.status', ['ended', 'in_progress']);
 
 		if (isEmpty(rideNotStartedYet)) {
 			return res.status(400).send('Ride already started/ended!');
 		}
+
+		const rideId = rideNotStartedYet[0].ride_id;
+
 		const updateRideStatus = await db('ride')
 			.where('ride_id', rideId)
-			.andWhere('user_id', userId)
+			.andWhere('ticket_id', ticket_id)
 			.update({
 				status: 'in_progress',
 			})
