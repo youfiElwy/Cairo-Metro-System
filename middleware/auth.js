@@ -1,6 +1,5 @@
 const { v4 } = require('uuid');
 const db = require('../connectors/db');
-const roles = require('../constants/roles');
 const { getSessionToken } = require('../utils/session');
 
 module.exports = async function (req, res, next) {

@@ -4,7 +4,7 @@ const express = require('express');
 const app = express();
 
 const knex = require('knex');
-const db = require('./db');
+const db = require('./connectors/db');
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
@@ -13,17 +13,17 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // MY APIs
 const signup_route = require('./routes/public/user_sign_up');
 const login_route = require('./routes/public/user_login');
-const refund_request_route = require('./apis/user_tickets/user_refund_request');
+const refund_request_route = require('./routes/private/user_tickets/user_refund_request');
 const get_users_route = require('./routes/public/get_users');
 const delete_users_route = require('./routes/public/delete_user');
-const user_forgot_password_route = require('./apis/user_management/forgot_pass/user_forgot_password');
-const user_forgot_password_verify_route = require('./apis/user_management/forgot_pass/user_forgot_password_verify');
-const user_forgot_password_new_password_route = require('./apis/user_management/forgot_pass/user_forgot_password_new_password');
-const get_user_subscription_route = require('./apis/user_subscriptions/get_user_subscription');
-const pay_for_subscription_route = require('./apis/user_subscriptions/pay_for_subscription');
-const pay_for_ticket_route = require('./apis/user_tickets/pay_for_ticket');
-const rideStarted = require('./apis/user_rides/simulate_ride_start');
-const rideEnded = require('./apis/user_rides/simulate_ride_end');
+const user_forgot_password_route = require('./routes/public/forgot_pass/user_forgot_password');
+const user_forgot_password_verify_route = require('./routes/public/forgot_pass/user_forgot_password_verify');
+const user_forgot_password_new_password_route = require('./routes/public/forgot_pass/user_forgot_password_new_password');
+const get_user_subscription_route = require('./routes/private/user_subscriptions/get_user_subscription');
+const pay_for_subscription_route = require('./routes/private/user_subscriptions/pay_for_subscription');
+const pay_for_ticket_route = require('./routes/private/user_tickets/pay_for_ticket');
+const rideStarted = require('./routes/private/user_rides/simulate_ride_start');
+const rideEnded = require('./routes/private/user_rides/simulate_ride_end');
 
 // ALL ROUTES
 signup_route(app);

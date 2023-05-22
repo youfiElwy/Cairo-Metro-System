@@ -1,4 +1,4 @@
-const db = require('../../db');
+const db = require('../../connectors/db');
 const { isEmpty } = require('lodash');
 
 module.exports = function (app) {

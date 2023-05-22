@@ -1,5 +1,5 @@
 const { isEmpty } = require('lodash');
-const db = require('../../db');
+const db = require('../../connectors/db');
 
 module.exports = function (app) {
 	app.delete('/api/v1/users/:userId', async (req, res) => {

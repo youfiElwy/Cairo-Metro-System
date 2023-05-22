@@ -1,6 +1,6 @@
 const { isEmpty } = require('lodash');
 const { v4 } = require('uuid');
-const db = require('../../db');
+const db = require('../../connectors/db');
 const bodyParser = require('body-parser');
 
 module.exports = function (app) {
