@@ -1,2 +1,9 @@
-node_modules
-/db.js
+# Ignore package.json and package-lock.json
+package.json
+package-lock.json
+
+# Ignore the entire node_modules directory
+node_modules/
+
+# Ignore .env file
+.env

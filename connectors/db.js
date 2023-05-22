@@ -4,8 +4,8 @@ const config = {
 		host: 'localhost',
 		port: 5432,
 		user: 'postgres',
-		password: '1q2w3e4r',
-		database: 'postgres',
+		password: 'Stecki10',
+		database: 'Metro_System_Semester_4_Projekt',
 	},
 };
 
