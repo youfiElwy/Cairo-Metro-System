@@ -5,8 +5,5 @@ package-lock.json
 # Ignore the entire node_modules directory
 node_modules/
 
-# Ignore TODO files
-TODO
-
 # Ignore .env file
 .env
