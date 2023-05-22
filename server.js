@@ -26,7 +26,6 @@ const pay_for_subscription_route = require('./routes/private/user_subscriptions/
 const pay_for_ticket_route = require('./routes/private/user_tickets/pay_for_ticket');
 const rideStarted = require('./routes/private/user_rides/simulate_ride_start');
 const rideEnded = require('./routes/private/user_rides/simulate_ride_end');
-const auth = require('./middleware/auth');
 
 // PUBLIC ROUTES
 signup_route(app);
