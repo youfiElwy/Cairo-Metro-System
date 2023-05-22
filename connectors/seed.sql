@@ -1,3 +1,44 @@
+-- Reset the serial column in the "users" table
+ALTER SEQUENCE users_user_id_seq RESTART WITH 1;
+
+-- Reset the serial column in the "transactions" table
+ALTER SEQUENCE transactions_trans_id_seq RESTART WITH 1;
+
+-- Reset the serial column in the "station" table
+ALTER SEQUENCE station_station_id_seq RESTART WITH 1;
+
+-- Reset the serial column in the "route" table
+ALTER SEQUENCE route_route_id_seq RESTART WITH 1;
+
+-- Reset the serial column in the "possible_routes" table
+ALTER SEQUENCE possible_routes_possible_routes_id_seq RESTART WITH 1;
+
+-- Reset the serial column in the "zones" table
+ALTER SEQUENCE zones_zone_id_seq RESTART WITH 1;
+
+-- Reset the serial column in the "subscriptions" table
+ALTER SEQUENCE subscriptions_sub_id_seq RESTART WITH 1;
+
+-- Reset the serial column in the "ticket" table
+ALTER SEQUENCE ticket_ticket_id_seq RESTART WITH 1;
+
+-- Reset the serial column in the "ride" table
+ALTER SEQUENCE ride_ride_id_seq RESTART WITH 1;
+
+-- Reset the serial column in the "senior_request" table
+ALTER SEQUENCE senior_request_request_id_seq RESTART WITH 1;
+
+-- Reset the serial column in the "refund_request" table
+ALTER SEQUENCE refund_request_request_id_seq RESTART WITH 1;
+
+-- Reset the serial column in the "sessions" table
+ALTER SEQUENCE sessions_sessionid_seq RESTART WITH 1;
+
+
+
+
+
+
 
 
 Insert Into users Values(DEFAULT, 'username1', 'email1', 'passwort1', '12/31/1999', 27, 'M', 'phone1', 'ssn1', 'normal', 'user');
@@ -13,11 +54,11 @@ Insert Into users Values(DEFAULT, 'Ossama', 'email9', 'passwort9', '12/31/1999',
 
 
 
-Insert Into transactions Values(DEFAULT, 140000, '12/31/1999', 'Visa', 1, 'holder1', 1);
-Insert Into transactions Values(DEFAULT, 140000, '12/31/1999', 'Visa', 1, 'holder1', 1);
-Insert Into transactions Values(DEFAULT, 140000, '12/31/1999', 'Visa', 1, 'holder1', 1);
-Insert Into transactions Values(DEFAULT, 140000, '12/31/1999', 'Visa', 2, 'holder1', 1);
-Insert Into transactions Values(DEFAULT, 140000, '12/31/1999', 'Visa', 2, 'holder1', 1);
+Insert Into transactions Values(DEFAULT, 140000,'payment', '12/31/1999', 'Visa', 1, 'holder1', 1);
+Insert Into transactions Values(DEFAULT, 140000, 'payment','12/31/1999', 'Visa', 1, 'holder1', 1);
+Insert Into transactions Values(DEFAULT, 140000, 'payment','12/31/1999', 'Visa', 1, 'holder1', 1);
+Insert Into transactions Values(DEFAULT, 140000, 'payment','12/31/1999', 'Visa', 2, 'holder1', 1);
+Insert Into transactions Values(DEFAULT, 140000, 'payment','12/31/1999', 'Visa', 2, 'holder1', 1);
 
 
 
@@ -36,9 +77,11 @@ Insert Into route Values(DEFAULT, 'origin4', 'destination4', 6);
 Insert Into route Values(DEFAULT, 'origin5', 'destination5', 6);
 
 
+INSERT INTO possible_routes (origin, destination, number_of_stations, path)
+VALUES ('final_origin1', 'final_destination1', 6, array_append('{}', 'path'));
 
-Insert Into possible_routes  Values(DEFAULT, 'final_origin1', 'final_destination1', 6, 'path');
-Insert Into possible_routes  Values(DEFAULT, 'final_origin2', 'final_destination2', 6, 'path');
+INSERT INTO possible_routes (origin, destination, number_of_stations, path)
+VALUES ('final_origin2', 'final_destination2', 6, array_append('{}', 'path'));
 
 
 
