@@ -11,11 +11,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // MY APIs
-const signup_route = require('./apis/user_management/user_sign_up');
-const login_route = require('./apis/user_management/user_login');
+const signup_route = require('./routes/public/user_sign_up');
+const login_route = require('./routes/public/user_login');
 const refund_request_route = require('./apis/user_tickets/user_refund_request');
-const get_users_route = require('./apis/user_management/get_users');
-const delete_users_route = require('./apis/user_management/delete_user');
+const get_users_route = require('./routes/public/get_users');
+const delete_users_route = require('./routes/public/delete_user');
 const user_forgot_password_route = require('./apis/user_management/forgot_pass/user_forgot_password');
 const user_forgot_password_verify_route = require('./apis/user_management/forgot_pass/user_forgot_password_verify');
 const user_forgot_password_new_password_route = require('./apis/user_management/forgot_pass/user_forgot_password_new_password');
