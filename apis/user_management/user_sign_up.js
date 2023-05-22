@@ -37,6 +37,7 @@ module.exports = function (app) {
 			phone: req.body.phone,
 			ssn: req.body.ssn,
 			usertype: 'normal',
+			userrole: req.body.userrole,
 		};
 		try {
 			const user = await db('users').insert(newUser).returning('*');
