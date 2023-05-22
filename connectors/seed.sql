@@ -111,5 +111,5 @@ Insert Into senior_request Values(DEFAULT, 'processing', 40, 2);
 
 
 
-Insert Into refund_request Values(DEFAULT, 'processing', 'description', 1, 1);
-Insert Into refund_request Values(DEFAULT, 'processing', 'description', 2, 2);
+Insert Into refund_request Values(DEFAULT, 'processing', 'description', 1, null, 1);
+Insert Into refund_request Values(DEFAULT, 'processing', 'description', 2, null, 2);
