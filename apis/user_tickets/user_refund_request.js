@@ -29,6 +29,10 @@ module.exports = function (app) {
 			return res.status(400).send('Invalid Ticket');
 		}
 
+		if (ticketExists[0].status === 'expired') {
+			return res.status(400).send('Refund rejected! Ticket already expired/used');
+		}
+
 		const requestExists = await db
 			.select('*')
 			.from('refund_request')
