@@ -16,7 +16,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const signup_route = require('./routes/public/user_sign_up');
 const login_route = require('./routes/public/user_login');
 const refund_request_route = require('./routes/private/user_tickets/user_refund_request');
-const get_users_route = require('./routes/public/get_users');
 const delete_users_route = require('./routes/public/delete_user');
 const user_forgot_password_route = require('./routes/public/forgot_pass/user_forgot_password');
 const user_forgot_password_verify_route = require('./routes/public/forgot_pass/user_forgot_password_verify');
@@ -33,7 +32,6 @@ login_route(app);
 user_forgot_password_route(app);
 user_forgot_password_verify_route(app);
 user_forgot_password_new_password_route(app);
-get_users_route(app);
 delete_users_route(app);
 
 // CALL AUTHENTICATION MIDDLEWARE

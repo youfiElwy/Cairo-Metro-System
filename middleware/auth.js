@@ -1,6 +1,6 @@
 const { v4 } = require('uuid');
 const db = require('../connectors/db');
-const { getSessionToken } = require('../utils/session');
+const getSessionToken = require('../utils/session').getSessionToken;
 
 module.exports = async function (req, res, next) {
 	const sessionToken = getSessionToken(req);
