@@ -95,16 +95,17 @@ Create Table ticket (
 	trans_ID integer,
 	status character varying(20), --{active/expired}
 	user_ID integer, 
-	possible_routes_id integer,
+	
 	sub_ID integer,
 	zone_id integer,
-
+origin character varying(30),
+	destination character varying(30),
 	Primary Key (ticket_ID),
 	Foreign Key (trans_ID) References transactions (trans_ID),
 	Foreign Key (zone_id) References zones (zone_id),
 	Foreign Key (user_ID) References users (user_ID),
 	Foreign Key (sub_ID) References subscriptions (sub_ID),
-	Foreign Key (possible_routes_id) References possible_routes (possible_routes_id)
+	Foreign Key (origin,destination) References all_possible_pathes (origin,destination)
 
 );
 

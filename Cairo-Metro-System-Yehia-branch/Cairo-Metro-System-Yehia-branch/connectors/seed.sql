@@ -60,19 +60,19 @@ Insert Into transactions Values(DEFAULT, 140000, 'payment','12/31/1999', 'Visa',
 
 
 
-Insert Into station Values(DEFAULT, 'maadi',     'description1', 6);
-Insert Into station Values(DEFAULT, 'tagamo3',   'description2', 6);
-Insert Into station Values(DEFAULT, 'rehaab',    'description3', 6);
-Insert Into station Values(DEFAULT, '6 Octobar', 'description4', 6);
-Insert Into station Values(DEFAULT, 'zahraa',    'description5', 6);
+-- Insert Into station Values(DEFAULT, 'maadi',     'description1', 6);
+-- Insert Into station Values(DEFAULT, 'tagamo3',   'description2', 6);
+-- Insert Into station Values(DEFAULT, 'rehaab',    'description3', 6);
+-- Insert Into station Values(DEFAULT, '6 Octobar', 'description4', 6);
+-- Insert Into station Values(DEFAULT, 'zahraa',    'description5', 6);
 
 
 
-Insert Into route Values(DEFAULT, 'origin1', 'destination1', 6);
-Insert Into route Values(DEFAULT, 'origin2', 'destination2', 6);
-Insert Into route Values(DEFAULT, 'origin3', 'destination3', 6);
-Insert Into route Values(DEFAULT, 'origin4', 'destination4', 6);
-Insert Into route Values(DEFAULT, 'origin5', 'destination5', 6);
+-- Insert Into route Values(DEFAULT, 'origin1', 'destination1', 6);
+-- Insert Into route Values(DEFAULT, 'origin2', 'destination2', 6);
+-- Insert Into route Values(DEFAULT, 'origin3', 'destination3', 6);
+-- Insert Into route Values(DEFAULT, 'origin4', 'destination4', 6);
+-- Insert Into route Values(DEFAULT, 'origin5', 'destination5', 6);
 
 
 -- INSERT INTO possible_routes (origin, destination, number_of_stations, path)
