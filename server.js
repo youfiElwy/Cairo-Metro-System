@@ -15,13 +15,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // ALL ROUTES
 const signup_route = require('./routes/public/user_sign_up');
 const login_route = require('./routes/public/user_login');
+const logout_route = require('./routes/private/user_logout');
 const refund_request_route = require('./routes/private/user_tickets/user_refund_request');
-const delete_users_route = require('./routes/public/delete_user');
+// const delete_users_route = require('./routes/public/delete_user');
 const user_forgot_password_route = require('./routes/public/forgot_pass/user_forgot_password');
 const user_forgot_password_verify_route = require('./routes/public/forgot_pass/user_forgot_password_verify');
 const user_forgot_password_new_password_route = require('./routes/public/forgot_pass/user_forgot_password_new_password');
 const get_user_subscription_route = require('./routes/private/user_subscriptions/get_user_subscription');
 const pay_for_subscription_route = require('./routes/private/user_subscriptions/pay_for_subscription');
+const cancel_subscription_route = require('./routes/private/user_subscriptions/cancel_subscription');
 const pay_for_ticket_route = require('./routes/private/user_tickets/pay_for_ticket');
 const rideStarted = require('./routes/private/user_rides/simulate_ride_start');
 const rideEnded = require('./routes/private/user_rides/simulate_ride_end');
@@ -32,15 +34,17 @@ login_route(app);
 user_forgot_password_route(app);
 user_forgot_password_verify_route(app);
 user_forgot_password_new_password_route(app);
-delete_users_route(app);
+// delete_users_route(app);
 
 // CALL AUTHENTICATION MIDDLEWARE
 app.use(authMiddleware);
 
 // PRIVATE ROUTES
+logout_route(app);
 refund_request_route(app);
 get_user_subscription_route(app);
 pay_for_subscription_route(app);
+cancel_subscription_route(app);
 pay_for_ticket_route(app);
 rideStarted(app);
 rideEnded(app);
