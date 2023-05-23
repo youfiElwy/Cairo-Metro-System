@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS possible_routes,
+DROP TABLE IF EXISTS     all_possible_pathes,
                    refund_request,
                    ride,
                    route,

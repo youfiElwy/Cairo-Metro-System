@@ -23,14 +23,16 @@ module.exports = function (app) {
 		} catch (err) {
 			return res.status(400).send('Failed to get user from database');
 		}
+	}
+)}
 
 		// this link will have the actual token and will have a req body that takes the new password
-		const newPasswordPage = `http://localhost:3000/api/v1/users/forgot_password/new_password/${token}`;
+		// const newPasswordPage = `http://localhost:3000/api/v1/users/forgot_password/new_password/${token}`;
 
-		const msg = {
-			to: 'youfielwy@gmail.com',
-			from: 'metronoreplystation@gmail.com',
-			subject: 'User Verification for your Password Reset',
+		// const msg = {
+		// 	to: 'youfielwy@gmail.com',
+		// 	from: 'metronoreplystation@gmail.com',
+		// 	subject: 'User Verification for your Password Reset',
 // 			text: `Click the link so we can verify it's you!: ${newPasswordPage}`,
 // 			html: `
 // 			  <html>
@@ -76,6 +78,6 @@ module.exports = function (app) {
 
 // 		await sgMail.send(msg);
 
-		return res.status(200).send(newPasswordPage);
-	});
-};
+	// 	return res.status(200).send(newPasswordPage);
+	// });
+

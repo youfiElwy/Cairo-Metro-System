@@ -10,8 +10,6 @@ ALTER SEQUENCE station_station_id_seq RESTART WITH 1;
 -- Reset the serial column in the "route" table
 ALTER SEQUENCE route_route_id_seq RESTART WITH 1;
 
--- Reset the serial column in the "possible_routes" table
-ALTER SEQUENCE possible_routes_possible_routes_id_seq RESTART WITH 1;
 
 -- Reset the serial column in the "zones" table
 ALTER SEQUENCE zones_zone_id_seq RESTART WITH 1;
@@ -77,11 +75,11 @@ Insert Into route Values(DEFAULT, 'origin4', 'destination4', 6);
 Insert Into route Values(DEFAULT, 'origin5', 'destination5', 6);
 
 
-INSERT INTO possible_routes (origin, destination, number_of_stations, path)
-VALUES ('final_origin1', 'final_destination1', 6, array_append('{}', 'path'));
+-- INSERT INTO possible_routes (origin, destination, number_of_stations, path)
+-- VALUES ('final_origin1', 'final_destination1', 6, array_append('{}', 'path'));
 
-INSERT INTO possible_routes (origin, destination, number_of_stations, path)
-VALUES ('final_origin2', 'final_destination2', 6, array_append('{}', 'path'));
+-- INSERT INTO possible_routes (origin, destination, number_of_stations, path)
+-- VALUES ('final_origin2', 'final_destination2', 6, array_append('{}', 'path'));
 
 
 

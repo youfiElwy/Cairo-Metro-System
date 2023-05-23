@@ -2,7 +2,7 @@ const express = require("express"); //to impoert express
 const app = express(); //to use express funstions (post / get .. )
 const cors = require("cors"); //to import cors to help us manpultaing differenet ports easi;y
 
-const pool = require("./db.js"); //import the databse file
+const pool = require("../connectors/db"); //import the databse file
 
 //middleware
 app.use(cors());

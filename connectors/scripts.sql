@@ -54,14 +54,13 @@ Create Table route (
 	Foreign Key (admin_ID) References users (user_ID)
 );
 
-Create Table possible_routes(
-	possible_routes_id serial,
+Create Table all_possible_pathes(
 	origin character varying(30),
 	destination character varying(30),
 	number_of_stations integer,
 	path text[],
 	
-	Primary Key (possible_routes_id)
+	Primary Key (origin,destination)
 );
 
 CREATE TABLE zones(
