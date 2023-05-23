@@ -84,7 +84,7 @@ app.delete("/station/:id", async (req, res) => {
         }
       }
     }
-        rerun_pricing_algo()
+    rerun_pricing_algo();
     res.json("deleted "); // to return the res to user
   } catch (error) {
     console.error(error.message);
@@ -95,7 +95,6 @@ app.delete("/station/:id", async (req, res) => {
 //   console.log("server has started on port 3000 http://localhost:3000/station");
 // });
 //function calls
-//loadStationDB();
 
 // function logic
 
@@ -114,8 +113,7 @@ const { log } = require("console");
 async function loadStationDB() {
   // first insert the staions
   for (let i = 0; i < vp.length; i++)
-    await pool.query("Insert into station  Values ($1,$2,$3,$4) ", [
-      vp[i][0],
+    await pool.query("Insert into station  Values ($1,$2,$3) ", [
       "location",
       vp[i][1],
       1,
@@ -136,6 +134,7 @@ async function pricing_algorithm() {
   //console.log(numEdges.length);
   for (let i = 0; i < numEdges.length; i++) {
     for (let j = 0; j < numEdges.length; j++) {
+      if (i == j) continue;
       await pool.query(
         "Insert into all_possible_pathes  Values ($1,$2,$3,$4)  ",
         [vp[i][1], vp[j][1], numEdges[i][j], shortestPaths[i][j]]
@@ -210,5 +209,7 @@ async function updating_the_matrix() {
   //   console.log(adjMatrix2);
   return adjMatrix2;
 }
+loadStationDB();
+
 updating_the_matrix();
-module.exports = {rerun_pricing_algo}
+module.exports = { rerun_pricing_algo };
