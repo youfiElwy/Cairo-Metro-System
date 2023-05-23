@@ -4,12 +4,6 @@ ALTER SEQUENCE users_user_id_seq RESTART WITH 1;
 -- Reset the serial column in the "transactions" table
 ALTER SEQUENCE transactions_trans_id_seq RESTART WITH 1;
 
--- Reset the serial column in the "station" table
-ALTER SEQUENCE station_station_id_seq RESTART WITH 1;
-
--- Reset the serial column in the "route" table
-ALTER SEQUENCE route_route_id_seq RESTART WITH 1;
-
 
 -- Reset the serial column in the "zones" table
 ALTER SEQUENCE zones_zone_id_seq RESTART WITH 1;

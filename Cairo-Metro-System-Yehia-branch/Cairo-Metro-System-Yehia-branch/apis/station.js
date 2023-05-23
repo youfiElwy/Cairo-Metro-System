@@ -29,32 +29,48 @@ async function emptyTable(tableName) {
 //create station
 app.post("/station", async (req, res) => {
   try {
-    const { description } = req.body; //reading the input from the json file
+    const { description } = req.body;
+    //check if it was posted before
+    const found = (
+      await pool.query("select * from  station  where description = $1", [
+        description,
+      ])
+    ).rowCount;
+    if (found === 1) {
+      res.status(400).send("This station is already exists ");
+    }
+
     const newStation = await pool.query(
-      "Insert into station (lokation,description,admin_id) Values ($1,$2,$3)  ",
+      "Insert into station  Values ($1,$2,$3)  ",
       ["location", description, 1]
-    ); //  sql query
-    res.json(newStation); //  to send a JSON response back to the client.
-    //   res.send(newStation)
-    // console.log(newS tation.rows); // just for debugging
+    );
+    res.json(newStation);
   } catch (error) {
     console.error(error.message);
   }
 });
 
 // upme the admin id should come from the session
-// upme change description to name
 //update station
+
 app.put("/station/:id", async (req, res) => {
   try {
-    const { id } = req.params; //station id is the station name not id -**************-*-*-*
-    const { description } = req.body;
+    const { id: old_description } = req.params; //station id is the station name not id -**************-*-*-*
+    const { description: new_description } = req.body;
+    // check if the id is not valid
+    const found = (
+      await pool.query("select * from  station  where description = $1", [
+        old_description,
+      ])
+    ).rowCount;
+    if (found === 0) {
+      res.status(400).send("This id does NOT exist");
+    }
     const update_station = await pool.query(
-      "update station set description =$1 where station_id = $2", //sql query
-      [description, id]
+      "update station set description =$1 where description = $2",
+      [new_description, old_description]
     ); // sql query
-    res.json("statoin updated"); // to return the res to user
-    //console.log(update_tod.rows[0]); // for debugging
+    res.json("statoin updated");
   } catch (error) {
     console.error(error.message);
   }
@@ -64,50 +80,57 @@ app.put("/station/:id", async (req, res) => {
 app.delete("/station", async (req, res) => {
   try {
     const { description: target_station } = req.body; //station name
-    if (!target_station) res.status("400").message("no description");
+    if (!target_station) res.status(400).send("no description");
     //check if this id vaild
     const isValid = await pool.query(
-      "select *  from station where description  = $1",
+      "select *  from station where description = $1",
       [target_station]
     ); // sql query
     if (isValid.rowCount === 0) {
-      res.status("400").message("no valid station");
+      res.status(400).send("no valid station");
     }
 
     // now before  deleteing the station we need to connect it's edges to each other first
     // sql query
 
     const nodeSet = new Set();
-    // const [{ count }] = (
-    //   await pool.query(`SELECT MAX(route_id) as count FROM route;`)
-    // ).rows;
-    // console.log(count);
 
     // get the route table
     const { rows: route } = await pool.query("select * from route");
     //here we get all the stations that have edge with target station
     // and we delete the edge of the target station
-    for (const { route_id, origin, destination } of route) {
+    for (const { origin, destination } of route) {
       if (origin === target_station) {
-        await pool.query("delete  from route where route_id = $1", [route_id]);
+        await pool.query(
+          "delete  from route where origin = $1 AND destination = $2",
+          [origin, destination]
+        );
         nodeSet.add(destination);
       } else if (destination === target_station) {
-        await pool.query("delete  from route where route_id = $1", [route_id]);
+        await pool.query(
+          "delete  from route where origin = $1 AND destination = $2",
+          [origin, destination]
+        );
         nodeSet.add(origin);
       }
     }
-
+    console.log(nodeSet);
     // now make edge between all the nodeSet elements
     for (i of nodeSet) {
       for (j of nodeSet) {
         if (i !== j) {
-          console.log(i + " "+j);
-          await pool.query(
-            "Insert into route (origin,destination,admin_id) Values ($1,$2,$3)  ",
-            [i, j, 1]
-          );
+          console.log(i + " " + j);
+          // check if there is a route already
+          const found = (
+            await pool.query(
+              "select * from  route  where origin = $1 AND destination = $2",
+              [i, j]
+            )
+          ).rowCount;
+          if (found === 1) continue;
+          await pool.query("Insert into route  Values ($1,$2,$3)  ", [i, j, 1]);
         }
-      } 
+      }
     }
 
     // // now we can delete the station safely
@@ -122,13 +145,6 @@ app.delete("/station", async (req, res) => {
 });
 
 // end of the requests
-
-// app.listen(3000, () => {
-//   console.log("server has started on port 3000 http://localhost:3000/station");
-// });
-//function calls
-
-// function logic
 
 // start of Db loading  ------------------------------------------------------------------------
 const {
@@ -251,7 +267,7 @@ async function start() {
   await loadStationDB();
   await rerun_pricing_algo();
 }
-// start();
+//  start();
 app.listen(3000, () => {
   console.log("server has started on port 3000 http://localhost:3000/station");
 });

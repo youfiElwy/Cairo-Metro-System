@@ -32,25 +32,21 @@ Create Table transactions (
 );
 
 Create Table station (
-	station_ID serial,
 	lokation character varying(30),
 	description character varying(200),
-	
 	admin_ID integer,
-		
-	Primary Key (station_ID),
+	Primary Key (description),
 	Foreign Key (admin_ID) References users (user_ID)
 );
 
 
 Create Table route (
-	route_ID serial,
 	origin character varying(30),
 	destination character varying(30),
 	
 	admin_ID integer,
 	
-	Primary Key (route_ID),
+	Primary Key (origin,destination),
 	Foreign Key (admin_ID) References users (user_ID)
 );
 
