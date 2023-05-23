@@ -1,14 +1,17 @@
 const { isEmpty } = require('lodash');
 const db = require('../../../connectors/db');
 const bodyParser = require('body-parser');
+const getUser = require('../../../routes/public/get_user');
 
 module.exports = function (app) {
 	app.use(bodyParser.json());
 	app.use(bodyParser.urlencoded({ extended: true }));
 
-	app.get('/api/v1/users/:userId/subscription', async function (req, res) {
+	app.get('/api/v1/users/subscription', async function (req, res) {
 		try {
-			const { userId } = req.params;
+			const user = await getUser(req);
+
+			const userId = user.user_id;
 			const subscrib = await db
 				.select('*')
 				.from('subscriptions')

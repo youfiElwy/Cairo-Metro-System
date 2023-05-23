@@ -1,6 +1,7 @@
 const { isEmpty } = require('lodash');
 const db = require('../../../connectors/db');
 const bodyParser = require('body-parser');
+const getUser = require('../../../routes/public/get_user');
 
 // module.exports = function (app) {
 // 	app.use(bodyParser.json());
@@ -43,8 +44,10 @@ module.exports = function (app) {
 	app.use(bodyParser.json());
 	app.use(bodyParser.urlencoded({ extended: true }));
 
-	app.post('/api/v1/payment/ticket/:userId', async function (req, res) {
-		const { userId } = req.params;
+	app.post('/api/v1/payment/ticket/', async function (req, res) {
+		const user = await getUser(req);
+
+		const userId = user.user_id;
 
 		// Get the possible_routes_id from its table using the origin and destination
 		const possibleRoute = await db

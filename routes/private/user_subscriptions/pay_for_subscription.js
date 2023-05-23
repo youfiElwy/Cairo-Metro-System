@@ -1,6 +1,7 @@
 const { isEmpty } = require('lodash');
 const db = require('../../../connectors/db');
 const bodyParser = require('body-parser');
+const getUser = require('../../../routes/public/get_user');
 
 // module.exports = function (app) {
 // 	app.use(bodyParser.json());
@@ -39,9 +40,11 @@ module.exports = function (app) {
 	app.use(bodyParser.json());
 	app.use(bodyParser.urlencoded({ extended: true }));
 
-	app.post('/api/v1/payment/subscriptions/:userId', async function (req, res) {
+	app.post('/api/v1/payment/subscriptions/', async function (req, res) {
+		const user = await getUser(req);
+		const userId = user.user_id;
+
 		// check if user is already subscribed
-		const { userId } = req.params;
 		const subExists = await db.select('*').from('subscriptions').where('user_id', userId);
 		if (!isEmpty(subExists)) {
 			return res.status(400).send('user is already subscribed to a plan');

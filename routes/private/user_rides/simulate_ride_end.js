@@ -1,14 +1,17 @@
 const { isEmpty } = require('lodash');
 const db = require('../../../connectors/db');
 const bodyParser = require('body-parser');
+const getUser = require('../../../routes/public/get_user');
 
 module.exports = function (app) {
 	app.use(bodyParser.json());
 	app.use(bodyParser.urlencoded({ extended: true }));
 
-	app.put('/api/v1/user/:userId/ride/simulate/end', async function (req, res) {
+	app.put('/api/v1/user/ride/simulate/end', async function (req, res) {
+		const user = await getUser(req);
+
 		const { ticket_id } = req.body;
-		const { userId } = req.params;
+		const userId = user.user_id;
 
 		if (!ticket_id) {
 			return res.status(400).send('Ticket ID is required');

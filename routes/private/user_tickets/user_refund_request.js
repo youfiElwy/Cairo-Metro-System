@@ -1,13 +1,16 @@
 const { isEmpty } = require('lodash');
 const db = require('../../../connectors/db');
 const bodyParser = require('body-parser');
+const getUser = require('../../../routes/public/get_user');
 
 module.exports = function (app) {
 	app.use(bodyParser.json());
 	app.use(bodyParser.urlencoded({ extended: true }));
 
-	app.post('/api/v1/users/:userId/refund_request', async function (req, res) {
-		const { userId } = req.params;
+	app.post('/api/v1/users/refund_request', async function (req, res) {
+		const user = await getUser(req);
+
+		const userId = user.user_id;
 		// i shouldnt check if user id exists cuz ill get it from the session or smth
 		// which means he definietly exists keda keda
 
