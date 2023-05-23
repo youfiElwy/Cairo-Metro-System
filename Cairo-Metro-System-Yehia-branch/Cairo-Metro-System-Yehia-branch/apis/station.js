@@ -150,10 +150,8 @@ app.delete("/station", async (req, res) => {
 const {
   floydWarshall,
   getShortestPaths,
-  s1,
   numEdges,
   shortestPaths,
-  mp,
   vp,
 } = require("./pricing_alog.js");
 // const { log } = require("console");
@@ -163,10 +161,11 @@ async function loadStationDB() {
   // console.log(vp);
 
   for (let i = 0; i < vp.length; i++)
-    await pool.query(
-      "Insert into station (lokation,description,admin_id) Values ($1,$2,$3) ",
-      ["location", vp[i][1], 1]
-    );
+    await pool.query("Insert into station  Values ($1,$2,$3) ", [
+      "location",
+      vp[i][1],
+      1,
+    ]);
   await pricing_algorithm();
 }
 //pricing_algorithm()
@@ -196,18 +195,18 @@ async function rerun_pricing_algo() {
 // UPDATE THE MATRIX
 async function updating_the_matrix() {
   await emptyTable("all_possible_pathes");
-  const { size } = await pool.query(
-    `SELECT Max(station_id) as size FROM station;`
-  ).rows;
-  console.log(size);
-  // console.log(size);
 
-  // why wrong ????????????????
-  //   const adjMatrix2 = new Array(size);
-  //   for (let i = 0; i < adjMatrix2.length; i++) {
-  //     adjMatrix2[i] = new Array(size).fill(false);
-  //   }
-
+  //new start
+  // fill all stations into set then move to array to get elemnt by index
+  const { rows: route } = await pool.query("select * from route");
+  const all_routes = new Set();
+  for (const { origin, destination } of route) {
+    all_routes.add(origin);
+    all_routes.add(destination);
+  }
+  const currentStations = Array.from(all_routes);
+  // console.log(currentStations);
+  let size = currentStations.length;
   const adjMatrix2 = Array.from({ length: size }, () =>
     Array(size).fill(false)
   );
@@ -216,46 +215,70 @@ async function updating_the_matrix() {
       adjMatrix2[i][j] = false;
     }
   }
-  //  console.log(adjMatrix2);
 
-  const [{ count }] = (
-    await pool.query(`SELECT Max(route_id) as count FROM route;`)
-  ).rows;
-  console.log(count);
-  for (let i = 1; i <= count; i++) {
-    // get stations names
-
-    let result = await pool.query("select * from route where route_id = $1", [
-      i,
-    ]);
-    if (result.rowCount === 0) continue;
-    let origin_station = result.rows.map((row) => row.origin)[0];
-    let destination_station = result.rows.map((row) => row.destination)[0];
-    // console.log(origin_station);
-    // console.log(destination_station);
-
-    // convert name to id
-    const { rows: originRows } = await pool.query(
-      "SELECT station_id FROM station WHERE description = $1;",
-      [origin_station]
-    );
-    const origin_station_id = originRows[0].station_id;
-
-    const { rows: destinationRows } = await pool.query(
-      "SELECT station_id FROM station WHERE description = $1;",
-      [destination_station]
-    );
-    const destination_station_id = destinationRows[0].station_id;
-
-    // console.log(origin_station_id);
-    // console.log(destination_station_id);
-
-    adjMatrix2[origin_station_id][destination_station_id] = true;
-    adjMatrix2[destination_station_id][origin_station_id] = true;
+  for (const { origin, destination } of route) {
+    let o_id = currentStations.indexOf(origin);
+    let d_id = currentStations.indexOf(destination);
+// console.log(o_id+" "+d_id);
+    adjMatrix2[o_id][d_id] = true;
+    adjMatrix2[d_id][o_id] = true;
   }
   //   console.log(adjMatrix2);
   return adjMatrix2;
 }
+
+// old code
+
+// const { size } = await pool.query(
+//     `SELECT Max(station_id) as size FROM station;`
+//   ).rows;
+//   console.log(size);
+// console.log(size);
+
+// why wrong ????????????????
+//   const adjMatrix2 = new Array(size);
+//   for (let i = 0; i < adjMatrix2.length; i++) {
+//     adjMatrix2[i] = new Array(size).fill(false);
+//   }
+
+//  console.log(adjMatrix2);
+
+// const [{ count }] = (
+//   await pool.query(`SELECT Max(route_id) as count FROM route;`)
+// ).rows;
+// console.log(count);// for (let i = 1; i <= count; i++) {
+//   // get stations names
+
+//   let result = await pool.query("select * from route where route_id = $1", [
+//     i,
+//   ]);
+//   if (result.rowCount === 0) continue;
+//   let origin_station = result.rows.map((row) => row.origin)[0];
+//   let destination_station = result.rows.map((row) => row.destination)[0];
+//   // console.log(origin_station);
+//   // console.log(destination_station);
+
+//   // convert name to id
+//   const { rows: originRows } = await pool.query(
+//     "SELECT station_id FROM station WHERE description = $1;",
+//     [origin_station]
+//   );
+//   const origin_station_id = originRows[0].station_id;
+
+//   const { rows: destinationRows } = await pool.query(
+//     "SELECT station_id FROM station WHERE description = $1;",
+//     [destination_station]
+//   );
+//   const destination_station_id = destinationRows[0].station_id;
+
+// console.log(origin_station_id);
+// console.log(destination_station_id);
+
+//   adjMatrix2[origin_station_id][destination_station_id] = true;
+//   adjMatrix2[destination_station_id][origin_station_id] = true;
+// }
+// //   console.log(adjMatrix2);
+// return adjMatrix2;
 
 module.exports = { emptyTable, rerun_pricing_algo };
 
@@ -267,10 +290,10 @@ async function start() {
   await loadStationDB();
   await rerun_pricing_algo();
 }
-//  start();
-app.listen(3000, () => {
-  console.log("server has started on port 3000 http://localhost:3000/station");
-});
+ start();
+// app.listen(3000, () => {
+//   console.log("server has started on port 3000 http://localhost:3000/station");
+// });
 //  loadStationDB();
 // rerun_pricing_algo();
 // emptyTable("station");

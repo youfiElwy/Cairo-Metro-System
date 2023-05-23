@@ -14,30 +14,78 @@ const { rerun_pricing_algo, emptyTable } = require("./station.js");
 
 app.post("/route", async (req, res) => {
   try {
-    const { origin, destination, admin_id } = req.body; //reading the input from the json file
+    const { origin, destination, name, admin_id } = req.body;
+    // check if there wa a route before
+    const found = (
+      await pool.query(
+        "select * from  route  where origin = $1 AND destination = $2 ",
+        [origin, destination]
+      )
+    ).rowCount;
+    if (found === 1) {
+      res.status(400).send("This route is already exists ");
+    }
+
     const newStation = await pool.query(
-      "Insert into route (origin,destination,admin_ID) Values ($1,$2,$3)  ",
-      [origin, destination, admin_id]
-    ); //  sql query
-    res.json(newStation); //  to send a JSON response back to the client.
+      "Insert into route Values ($1,$2,$3,$4)  ",
+      [origin, destination, name, admin_id]
+    );
+    res.json(newStation);
     rerun_pricing_algo();
     //   res.send(newStation)
-    console.log(newStation.rows); // just for debugging
   } catch (error) {
     console.error(error.message);
   }
 });
 
+// update route
+
+app.put("/route", async (req, res) => {
+  try {
+    const { origin, destination, name: new_name } = req.body;
+    // check if there wa a route before
+    const found = (
+      await pool.query(
+        "select * from  route  where origin = $1 AND destination = $2 ",
+        [origin, destination]
+      )
+    ).rowCount;
+    if (found === 0) {
+      res.status(400).send("This route Does NOT  exist ");
+    }
+   
+    const newRoute = await pool.query(
+      "update route   set name =$1 where   origin = $2 AND destination = $3 ",
+      [new_name, origin, destination]
+    );
+    res.json(newRoute);
+  } catch (error) {}
+});
 //delete route
 
-app.delete("/route/:id", async (req, res) => {
+//// here i changed akot of stuffs than need in the requiremnet ------------------------
+app.delete("/route", async (req, res) => {
   try {
-    const { id } = req.params;
-    await pool.query("delete  from route where route_id = $1", [id]); // sql query
+    const { origin, destination } = req.body;
+    // check if there wa a route before
+    const found = (
+      await pool.query(
+        "select * from  route  where origin = $1 AND destination = $2 ",
+        [origin, destination]
+      )
+    ).rowCount;
+    if (found === 0) {
+      res.status(400).send("This route is does NOT exists ");
+    }
+
+    await pool.query("delete  from route where origin = $1 ,destination= $2 ", [
+      origin,
+      destination,
+    ]); // sql query
 
     rerun_pricing_algo();
 
-    res.json("deleted "); // to return the res to user
+    res.json("deleted ");
   } catch (error) {
     console.error(error.message);
   }
@@ -55,14 +103,21 @@ async function loadRouteDB() {
   for (let i = 1; i < stations.length; i++) {
     if (i !== 34 + 1 && i !== 54 + 1) {
       //if  i isn't the last station in the 1st or the 2nd line so make edge  we did this to prevent the last station in the 1st be connected to the first station in the 2nd line
-      await pool.query(
-        "Insert into route (origin,destination,admin_ID) Values ($1,$2,$3) ",
-        [stations[i], stations[i - 1], 1]
-      );
-      await pool.query(
-        "Insert into route (origin,destination,admin_ID) Values ($1,$2,$3) ",
-        [stations[i - 1], stations[i], 1]
-      );
+      let nameForwared = stations[i] + "_" + stations[i - 1] + "_Line";
+      let nameBackwared = stations[i - 1] + "_" + stations[i] + "_Line";
+
+      await pool.query("Insert into route  Values ($1,$2,$3,$4) ", [
+        stations[i],
+        stations[i - 1],
+        nameForwared,
+        1,
+      ]);
+      await pool.query("Insert into route  Values ($1,$2,$3,$4) ", [
+        stations[i - 1],
+        stations[i],
+        nameBackwared,
+        1,
+      ]);
     }
   }
 }
