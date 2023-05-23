@@ -3,39 +3,6 @@ const db = require('../../../connectors/db');
 const bodyParser = require('body-parser');
 const getUser = require('../../../routes/public/get_user');
 
-// module.exports = function (app) {
-// 	app.use(bodyParser.json());
-// 	app.use(bodyParser.urlencoded({ extended: true }));
-
-// 	app.post('/api/v1/payment/subscriptions/:userId', async function (req, res) {
-// 		// check if user is already subscribed
-// 		const { userId } = req.params;
-// 		const subExists = await db.select('*').from('subscriptions').where('user_id', userId);
-// 		if (!isEmpty(subExists)) {
-// 			return res.status(400).send('user is already subscribed to a plan');
-// 		}
-// 		const newSubscrip = {
-// 			duration: req.body.duration,
-// 			zone: req.body.zone,
-// 			status: 'active',
-// 			date_of_purchase: new Date(Date.now()),
-// 			expiery_date: req.body.expiery_date,
-// 			user_id: userId,
-// 		};
-// 		// We will use this when sending an email
-// 		const creditCardNumber = req.body.creditCardNumber;
-// 		const holderName = req.body.holderName;
-
-// 		try {
-// 			const newRow = await db('subscriptions').insert(newSubscrip).returning('*');
-// 			return res.status(200).json(newRow);
-// 		} catch (err) {
-// 			console.log(err.message);
-// 			return res.status(400).send('Error: Could not enter data into database');
-// 		}
-// 	});
-// };
-
 module.exports = function (app) {
 	app.use(bodyParser.json());
 	app.use(bodyParser.urlencoded({ extended: true }));
@@ -45,9 +12,13 @@ module.exports = function (app) {
 		const userId = user.user_id;
 
 		// check if user is already subscribed
-		const subExists = await db.select('*').from('subscriptions').where('user_id', userId);
+		const subExists = await db
+			.select('*')
+			.from('subscriptions')
+			.where('user_id', userId)
+			.andWhere('status', 'active');
 		if (!isEmpty(subExists)) {
-			return res.status(400).send('user is already subscribed to a plan');
+			return res.status(400).send('user is already subscribed to an active plan');
 		}
 
 		try {
@@ -92,7 +63,7 @@ module.exports = function (app) {
 
 			const newSub = await db('subscriptions').insert(newSubscripEntry).returning('*');
 
-			return res.status(200).json(newSub);
+			return res.status(200).send('User successfully subscribed to a plan');
 		} catch (err) {
 			console.log(err.message);
 			return res

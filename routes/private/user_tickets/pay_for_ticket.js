@@ -3,43 +3,6 @@ const db = require('../../../connectors/db');
 const bodyParser = require('body-parser');
 const getUser = require('../../../routes/public/get_user');
 
-// module.exports = function (app) {
-// 	app.use(bodyParser.json());
-// 	app.use(bodyParser.urlencoded({ extended: true }));
-
-// 	app.post('/api/v1/payment/ticket/:userId', async function (req, res) {
-// 		const { userId } = req.params;
-// 		const newTicket = {
-// 			date_of_purchase: new Date(Date.now()),
-// 			user_id: userId,
-// 			ride_id: req.body.ride_id,
-// 		};
-// 		const ticketExists = await db
-// 			.select('*')
-// 			.from('ticket')
-// 			.where('user_id', userId)
-// 			.andWhere('ride_id', newTicket.ride_id);
-// 		if (!isEmpty(ticketExists)) {
-// 			return res.status(400).send('user already purchased a ticket to this ride');
-// 		}
-// 		// We will use this when sending an email
-// 		const creditCardNumber = req.body.creditCardNumber;
-// 		const holderName = req.body.holderName;
-// 		const price = req.body.price;
-// 		const origin = req.body.origin;
-// 		const destination = req.body.destination;
-// 		const trip_date = req.body.trip_date;
-
-// 		try {
-// 			const newRow = await db('ticket').insert(newTicket).returning('*');
-// 			return res.status(200).json(newRow);
-// 		} catch (err) {
-// 			console.log(err.message);
-// 			return res.status(400).send('Error: Could not enter data into database');
-// 		}
-// 	});
-// };
-
 module.exports = function (app) {
 	app.use(bodyParser.json());
 	app.use(bodyParser.urlencoded({ extended: true }));
@@ -74,8 +37,8 @@ module.exports = function (app) {
 		}
 
 		// check if User is subscribed or not
-		// if yes then --> no transaction. --> only decrement his number of usages
 		// if no then --> yes transaction. --> normally pay for transaction
+		// if yes then --> no transaction. --> only decrement his number of usages
 		const subscribtionExists = await db
 			.select('*')
 			.from('subscriptions')
@@ -137,6 +100,15 @@ module.exports = function (app) {
 						numberofusages: numberofusages - 1,
 					})
 					.returning('*');
+
+				if (updatedSub[0].numberofusages === 0) {
+					const updateState = await db('subscription')
+						.where('user_id', userId)
+						.update({
+							status: 'inactive',
+						})
+						.returning('*');
+				}
 
 				const subId = updatedSub[0].sub_id;
 
