@@ -7,7 +7,9 @@ module.exports = function (app) {
 	app.use(bodyParser.json());
 	app.use(bodyParser.urlencoded({ extended: true }));
 	app.post('/api/v1/senior/request', async function (req, res) {
-		const {user_id} = await getUser(req);
+		const userInfo = await getUser(req);
+		const user_id = userInfo.user_id;
+		const email = userInfo.email;
 
 		if (!req.body.ID_picture_age) {
 			return res.status(400).send('national id is required');
