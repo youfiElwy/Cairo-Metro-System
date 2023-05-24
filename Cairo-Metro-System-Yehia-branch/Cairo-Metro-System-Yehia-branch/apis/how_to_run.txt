@@ -1,5 +1,5 @@
 how to run this folder 
 it must done in order 
-first call loadStationDB 
-then loadRouteDB
+in station call start only when u run for the first time 
+in route call loadRouteDB only when u run for 1st time 
 then do your logic 

@@ -7,10 +7,10 @@ const pool = require("../connectors/db"); //import the databse file
 app.use(cors());
 app.use(express.json());
 
-//creat route
 const { rerun_pricing_algo, emptyTable } = require("./station.js");
 
 //start http requests
+//creat route
 
 app.post("/route", async (req, res) => {
   try {
@@ -25,7 +25,27 @@ app.post("/route", async (req, res) => {
     if (found === 1) {
       res.status(400).send("This route is already exists ");
     }
-
+    // check that's both origin and destination are valid stations
+    const found2 = (
+      await pool.query("select * from  station  where description = $1 ", [
+        origin,
+      ])
+    ).rowCount;
+    if (found2 === 0) {
+      res.status(400).send("This origin station does NOT exists ");
+    }
+    const found3 = (
+      await pool.query("select * from  station  where description = $1 ", [
+        destination,
+      ])
+    ).rowCount;
+    if (found3 === 0) {
+      res.status(400).send("This destination station does NOT exists ");
+    }
+    //prevent  from adding root between the same station
+    if (origin == destination) {
+      res.status(400).send("You Can't add an edge between the same nodes");
+    }
     const newStation = await pool.query(
       "Insert into route Values ($1,$2,$3,$4)  ",
       [origin, destination, name, admin_id]
@@ -53,7 +73,7 @@ app.put("/route", async (req, res) => {
     if (found === 0) {
       res.status(400).send("This route Does NOT  exist ");
     }
-   
+
     const newRoute = await pool.query(
       "update route   set name =$1 where   origin = $2 AND destination = $3 ",
       [new_name, origin, destination]
@@ -63,7 +83,7 @@ app.put("/route", async (req, res) => {
 });
 //delete route
 
-//// here i changed akot of stuffs than need in the requiremnet ------------------------
+//// here i changed alot of stuffs than need in the requiremnet ------------------------
 app.delete("/route", async (req, res) => {
   try {
     const { origin, destination } = req.body;
@@ -78,7 +98,7 @@ app.delete("/route", async (req, res) => {
       res.status(400).send("This route is does NOT exists ");
     }
 
-    await pool.query("delete  from route where origin = $1 ,destination= $2 ", [
+    await pool.query("delete  from route where origin = $1 AND destination= $2 ", [
       origin,
       destination,
     ]); // sql query
@@ -121,8 +141,8 @@ async function loadRouteDB() {
     }
   }
 }
-loadRouteDB();
+// loadRouteDB();
 console.log("route done");
-// app.listen(3000, () => {
-//   console.log("server has started on port 3000 http://localhost:3000/station");
-// });
+app.listen(3000, () => {
+  console.log("server has started on port 3000 http://localhost:3000/station");
+});
