@@ -107,7 +107,7 @@ module.exports = function (app) {
 			// 				is being processed at the moment.</p>
 			// 			  <p>Our team is currently reviewing your request,<br>
 			// 			  and it will be carefully evaluated within the next 2-4 business days</p>
-			// 			  <p>Thank you for choosing our Metro services,<br>
+			// 			  <p>Thank you for choosing our Metro services,<br><br>
 			// 			  and we appreciate your patience throughout this process.</p>
 			// 			</div>
 			// 		 </body>
