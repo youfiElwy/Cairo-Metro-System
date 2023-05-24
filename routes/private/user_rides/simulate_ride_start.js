@@ -12,12 +12,11 @@ module.exports = function (app) {
 
 		const { ticket_id } = req.body;
 		const userId = user.user_id;
-		console.log('THE USER ID IS:');
-		console.log(userId);
 
 		if (!ticket_id) {
 			return res.status(400).send('Ticket ID is required');
 		}
+
 		const ticketExists = await db
 			.select('*')
 			.from('ticket')

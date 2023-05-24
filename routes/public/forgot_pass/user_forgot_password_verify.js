@@ -14,7 +14,10 @@ module.exports = function (app) {
 	// then we inform the user that he is valid aw auhenticated.
 	// then he sends an update request with his new password
 	app.get('/api/v1/users/forgot_password/verify', async function (req, res) {
-		const { token } = req.query;
+		const { token, email } = req.query;
+		console.log('HERE ARE THE QUERY PARAMS');
+		console.log(token);
+		console.log(email);
 		try {
 			const user = await db('users').where('reset_token', token).first();
 			if (isEmpty(user) || user.reset_token_expiration < Date.now()) {
@@ -28,7 +31,7 @@ module.exports = function (app) {
 		const newPasswordPage = `http://localhost:3000/api/v1/users/forgot_password/new_password/${token}`;
 
 		// const msg = {
-		// 	to: 'youfielwy@gmail.com',
+		// 	to: email,
 		// 	from: 'metronoreplystation@gmail.com',
 		// 	subject: 'User Verification for your Password Reset',
 		// 	text: `Click the link so we can verify it's you!: ${newPasswordPage}`,
