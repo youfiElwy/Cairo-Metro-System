@@ -51,6 +51,7 @@ module.exports = function (app) {
 				const newTransaction = {
 					amount: 10, // YEHIA --> Update--> get price from zones table n stuff
 					trans_date: new Date(Date.now()),
+					transaction_to: "metro",
 					card_type: req.body.card_type,
 					credit_card: req.body.credit_card, // credit card number
 					holder_name: req.body.holder_name,
