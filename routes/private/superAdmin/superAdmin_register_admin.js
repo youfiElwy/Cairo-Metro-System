@@ -8,7 +8,7 @@ module.exports = function (app) {
     app.use(bodyParser.urlencoded({ extended: true }));
     app.put('/api/v1/superadmin/registeradmin', async function (req, res) {
         const userInfo = await getUser(req);
-       
+
 
         if (userInfo.isSuperAdmin == false) {
             return res.status(400).send('Error you are not a Super Admin');
@@ -28,12 +28,12 @@ module.exports = function (app) {
             return res.status(400).send('Error : user is already an admin');
         }
 
-        const getUser  = await db
-        .select("*")
-        .from("users") 
-        .where("user_id", req.body.user_id)
-        
-        const email = getUser.email;
+        const getUser = await db
+            .select("*")
+            .from("users")
+            .where("user_id", req.body.user_id)
+
+        const email = getUser[0].email;
 
         try {
             const registerAdmin = await db("users")
