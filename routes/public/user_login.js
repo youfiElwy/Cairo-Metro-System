@@ -2,6 +2,12 @@ const { isEmpty } = require('lodash');
 const { v4 } = require('uuid');
 const db = require('../../connectors/db');
 const bodyParser = require('body-parser');
+const crypto = require('crypto');
+
+function verifyPassword(password, hash, salt) {
+  const verifyHash = crypto.pbkdf2Sync(password, salt, 1000, 64, 'sha512').toString('hex');
+  return verifyHash === hash;
+}
 
 module.exports = function (app) {
 	app.use(bodyParser.json());
