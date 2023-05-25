@@ -13,8 +13,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // ALL ROUTES
-const signup_route = require("./routes/public/user_sign_up");
+
+//new 3 apis
+
 const station = require("./apis/station");
+const zones = require("./apis/zones");
+const route = require("./apis/route");
+
+const signup_route = require("./routes/public/user_sign_up");
 
 const login_route = require("./routes/public/user_login");
 const refund_request_route = require("./routes/private/user_tickets/user_refund_request");
@@ -47,7 +53,8 @@ pay_for_ticket_route(app);
 rideStarted(app);
 rideEnded(app);
 station(app);
-
+route(app);
+zones(app);
 // HANDLE IF WE DID NOT FIND THE ROUTE WE WERE LOOKING FOR
 app.use(function (req, res, next) {
   return res
