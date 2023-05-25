@@ -2,7 +2,6 @@ const express = require("express"); //to impoert express
 // const app = express(); //to use express funstions (post / get .. )
 const cors = require("cors"); //to import cors to help us manpultaing differenet ports easi;y
 const getUser = require("../routes/public/get_user");
-
 module.exports = function (app) {
   const {
     floydWarshall,
@@ -251,9 +250,14 @@ module.exports = function (app) {
     //new start
     // fill all stations into set then move to array to get elemnt by index
     const route = await db.select("*").from("route");
-    const size = (await db.select("*").from("station")).length;
-      
+    const all_routes = new Set();
+    for (const { origin, destination } of route) {
+      all_routes.add(origin);
+      all_routes.add(destination);
+    }
+    const currentStations = Array.from(all_routes);
     // console.log(currentStations);
+    let size = currentStations.length;
     const adjMatrix2 = Array.from({ length: size }, () =>
       Array(size).fill(false)
     );
@@ -264,18 +268,8 @@ module.exports = function (app) {
     }
 
     for (const { origin, destination } of route) {
-      let {station_id :o_id} = await db("station")
-        .select("station_id")
-        .where("description", "=", origin)
-        .first();
-
-      console.log(o_id);
-      let  {station_id :d_id} = await db("station")
-        .select("station_id")
-        .where("description", "=", destination)
-        .first();
-
-      console.log(d_id);
+      let o_id = currentStations.indexOf(origin);
+      let d_id = currentStations.indexOf(destination);
       // console.log(o_id+" "+d_id);
       adjMatrix2[o_id][d_id] = true;
       adjMatrix2[d_id][o_id] = true;
