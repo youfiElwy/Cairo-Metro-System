@@ -40,6 +40,11 @@ module.exports = function (app) {
 		}
 
 		try {
+			if (user.isSenior) {
+				// reduce amount/price by 40 %
+				// and then 7ot fel transaction the new price
+			}
+
 			const newTransaction = {
 				amount: 10, // YEHIA --> Update--> get price from zones table n stuff
 				trans_date: new Date(Date.now()),
