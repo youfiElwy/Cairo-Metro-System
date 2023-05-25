@@ -379,7 +379,126 @@ module.exports = function (app) {
 	// 	}
 	// });
 
-	app.post('/api/v1/payment/ticket/', async function (req, res) {
+	// app.post('/api/v1/payment/ticket/', async function (req, res) {
+	// 	const { originName, destinationName } = req.body;
+
+	// 	try {
+	// 		const originEntry = await db('station').where('lokation', originName).returning('*');
+	// 		const origin = parseInt(originEntry[0].station_id);
+	// 		console.log('ORIGIN ID');
+	// 		console.log(origin);
+
+	// 		const destinationEntry = await db('station')
+	// 			.where('lokation', destinationName)
+	// 			.returning('*');
+	// 		const destination = parseInt(destinationEntry[0].station_id);
+	// 		console.log('DESTINATION ID');
+	// 		console.log(destination);
+
+	// 		const user = await getUser(req);
+	// 		const userId = user.user_id;
+
+	// 		console.log('USER ID');
+	// 		console.log(userId);
+
+	// 		// Step 1: Check if the operation is valid
+
+	// 		// Check subscription status
+	// 		const subscriptionStatusResult = await db('subscriptions')
+	// 			.where('user_id', userId)
+	// 			.select('status');
+	// 		const subscriptionStatus = subscriptionStatusResult[0]?.status;
+
+	// 		if (subscriptionStatus !== 'active') {
+	// 			return res.status(400).json({ error: 'Your subscription has expired' });
+	// 		}
+
+	// 		// Check the number of usages
+	// 		const usagesResult = await db('subscriptions')
+	// 			.where('user_id', userId)
+	// 			.select('numberofusages', 'maxnumberofusages');
+	// 		const { numberOfUsages, maxNumberOfUsages } = usagesResult[0];
+
+	// 		if (numberOfUsages === 0) {
+	// 			return res.status(400).json({
+	// 				error: 'You have reached the maximum number of usages for your subscription',
+	// 			});
+	// 		}
+
+	// 		// Check the zone of the target session
+	// 		const zoneResult = await db('zones as z')
+	// 			.join('all_possible_pathes as pr', function () {
+	// 				this.on('pr.origin', '=', db.raw('?', origin)).andOn(
+	// 					'pr.destination',
+	// 					'=',
+	// 					db.raw('?', destination)
+	// 				);
+	// 			})
+	// 			.where('z.zone_id', function () {
+	// 				this.select('zone_id').from('subscriptions').where('user_id', userId);
+	// 			})
+	// 			.select('z.minimumstations', 'z.maximumstations', 'pr.number_of_stations');
+
+	// 		console.log(zoneResult);
+	// 		const { minimumstations, maximumstations, number_of_stations } = zoneResult[0];
+
+	// 		if (maximumstations < minimumstations) {
+	// 			return res.status(400).json({ error: 'Invalid zone configuration' });
+	// 		}
+
+	// 		if (number_of_stations > maximumstations) {
+	// 			return res.status(400).json({
+	// 				error: 'The zone of the target session is not within your subscription',
+	// 			});
+	// 		}
+
+	// 		// Step 2: Proceed with purchasing the ticket and assigning a ride
+
+	// 		// Decrease the number of usages and check if it reaches the maximum
+	// 		const newNumberOfUsages = numberOfUsages - 1;
+	// 		const ticketStatus = newNumberOfUsages === 0 ? 'expired' : 'active';
+
+	// 		// Update the subscription with the new number of usages and status
+	// 		await db('subscriptions')
+	// 			.where('user_id', userId)
+	// 			.update({ numberofusages: newNumberOfUsages, status: ticketStatus });
+
+	// 		// Create a ticket
+	// 		const ticketIdResult = await db('ticket')
+	// 			.insert({
+	// 				trans_ID: transactionId,
+	// 				status: ticketStatus,
+	// 				user_ID: userId,
+	// 				possible_routes_id: function () {
+	// 					this.select('possible_routes_id').from('possible_routes').where({
+	// 						origin: origin,
+	// 						destination: destination,
+	// 					});
+	// 				},
+	// 				zone_id: function () {
+	// 					this.select('zone_id').from('subscriptions').where('user_id', userId);
+	// 				},
+	// 			})
+	// 			.returning('ticket_ID');
+	// 		const ticketId = ticketIdResult[0];
+
+	// 		// Create a ride
+	// 		await db('ride').insert({
+	// 			status: 'upcoming',
+	// 			start_time: null,
+	// 			end_time: null,
+	// 			ticket_ID: ticketId,
+	// 		});
+
+	// 		// Return the successful response
+	// 		return res.json({ message: 'Ticket purchased successfully' });
+	// 	} catch (error) {
+	// 		console.error('Error executing query', error);
+	// 		return res.status(500).json({ error: 'Internal server error' });
+	// 	}
+	// });
+
+	app.post('/api/v1/payment/subscription/ticket/', async function (req, res) {
 		const { originName, destinationName } = req.body;
 
 		try {
@@ -427,7 +546,7 @@ module.exports = function (app) {
 
 			// Check the zone of the target session
 			const zoneResult = await db('zones as z')
-				.join('possible_routes as pr', function () {
+				.join('all_possible_pathes as pr', function () {
 					this.on('pr.origin', '=', db.raw('?', origin)).andOn(
 						'pr.destination',
 						'=',
@@ -469,12 +588,6 @@ module.exports = function (app) {
 					trans_ID: transactionId,
 					status: ticketStatus,
 					user_ID: userId,
-					possible_routes_id: function () {
-						this.select('possible_routes_id').from('possible_routes').where({
-							origin: origin,
-							destination: destination,
-						});
-					},
 					zone_id: function () {
 						this.select('zone_id').from('subscriptions').where('user_id', userId);
 					},

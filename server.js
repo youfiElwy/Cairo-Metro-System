@@ -31,6 +31,7 @@ const get_user_subscription_route = require('./routes/private/user_subscriptions
 const pay_for_subscription_route = require('./routes/private/user_subscriptions/pay_for_subscription');
 const cancel_subscription_route = require('./routes/private/user_subscriptions/cancel_subscription');
 const pay_for_ticket_route = require('./routes/private/user_tickets/pay_for_ticket');
+const pay_for_ticket_by_sub_route = require('./routes/private/user_tickets/pay_for_ticket_by_Sub');
 const rideStarted = require('./routes/private/user_rides/simulate_ride_start');
 const rideEnded = require('./routes/private/user_rides/simulate_ride_end');
 const user_senior_requests = require('./routes/private/user_requests/user_senior_request');
@@ -55,6 +56,7 @@ get_user_subscription_route(app);
 pay_for_subscription_route(app);
 cancel_subscription_route(app);
 pay_for_ticket_route(app);
+pay_for_ticket_by_sub_route(app);
 rideStarted(app);
 rideEnded(app);
 user_senior_requests(app);
