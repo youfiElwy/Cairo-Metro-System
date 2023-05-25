@@ -43,7 +43,7 @@ user_forgot_password_new_password_route(app);
 
 // CALL AUTHENTICATION MIDDLEWARE
 app.use(authMiddleware);
-
+ 
 // PRIVATE ROUTES
 logout_route(app);
 refund_request_route(app);
