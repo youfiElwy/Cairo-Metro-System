@@ -1,0 +1,12 @@
+DROP TABLE IF EXISTS     all_possible_pathes,
+                   refund_request,
+                   ride,
+                   route,
+                   senior_request,
+                   sessions,
+                   station,
+                   subscriptions,
+                   ticket,
+                   transactions,
+                   users,
+                   zones;
