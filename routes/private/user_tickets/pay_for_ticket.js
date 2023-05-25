@@ -54,6 +54,7 @@ module.exports = function (app) {
 				credit_card: req.body.credit_card, // credit card number
 				holder_name: req.body.holder_name,
 				user_id: userId,
+				transaction_to: 'Metro',
 			};
 
 			const newTransactionEntry = await db('transactions').insert(newTransaction).returning('*');
