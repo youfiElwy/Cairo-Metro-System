@@ -1,13 +1,13 @@
 // IMPORTS
-require("dotenv").config();
-const express = require("express");
+require('dotenv').config();
+const express = require('express');
 const app = express();
-const knex = require("knex");
-const db = require("./connectors/db");
-const bodyParser = require("body-parser");
+const knex = require('knex');
+const db = require('./connectors/db');
+const bodyParser = require('body-parser');
 
 // IMPORT AUTHENTICATION MIDDLEWARE
-const authMiddleware = require("./middleware/auth");
+const authMiddleware = require('./middleware/auth');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -16,16 +16,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 //new 3 apis
 
-const station = require("./routes/private/system_stations/station");
-const zones = require("./routes/private/system_stations/zones");
-const route = require("./routes/private/system_stations/route");
+const station = require('./routes/private/system_stations/station');
+const zones = require('./routes/private/system_stations/zones');
+const route = require('./routes/private/system_stations/route');
 
 const signup_route = require('./routes/public/user_sign_up');
 const login_route = require('./routes/public/user_login');
 const logout_route = require('./routes/private/user_logout');
 const refund_request_route = require('./routes/private/user_tickets/user_refund_request');
-// const delete_users_route = require('./routes/public/delete_user');
-const delete_users_route = require("./routes/public/delete_user");
 const user_forgot_password_route = require('./routes/public/forgot_pass/user_forgot_password');
 const user_forgot_password_verify_route = require('./routes/public/forgot_pass/user_forgot_password_verify');
 const user_forgot_password_new_password_route = require('./routes/public/forgot_pass/user_forgot_password_new_password');
@@ -35,9 +33,9 @@ const cancel_subscription_route = require('./routes/private/user_subscriptions/c
 const pay_for_ticket_route = require('./routes/private/user_tickets/pay_for_ticket');
 const rideStarted = require('./routes/private/user_rides/simulate_ride_start');
 const rideEnded = require('./routes/private/user_rides/simulate_ride_end');
-const user_senior_requests=require('./routes/private/user_requests/user_senior_request');
-const admin_manage_senior_requests=require('./routes/private/admin_manage_requests/admin_manage_senior_requests');
-const superadmin_register_admin =require('./routes/private/superAdmin/superAdmin_register_admin');
+const user_senior_requests = require('./routes/private/user_requests/user_senior_request');
+const admin_manage_senior_requests = require('./routes/private/admin_manage_requests/admin_manage_senior_requests');
+const superadmin_register_admin = require('./routes/private/superAdmin/superAdmin_register_admin');
 const admin_manage_refund_requests = require('./routes/private/admin_manage_requests/admin_manage_refund_requests');
 
 // PUBLIC ROUTES
@@ -46,7 +44,6 @@ login_route(app);
 user_forgot_password_route(app);
 user_forgot_password_verify_route(app);
 user_forgot_password_new_password_route(app);
-delete_users_route(app);
 
 // CALL AUTHENTICATION MIDDLEWARE
 app.use(authMiddleware);
@@ -72,14 +69,12 @@ zones(app);
 
 // HANDLE IF WE DID NOT FIND THE ROUTE WE WERE LOOKING FOR
 app.use(function (req, res, next) {
-  return res
-    .status(404)
-    .send(
-      "----------  ERROR COULD NOT FIND YOUR SPECIFIED ROUTE/PAGE  -----------"
-    );
+	return res
+		.status(404)
+		.send('----------  ERROR COULD NOT FIND YOUR SPECIFIED ROUTE/PAGE  -----------');
 });
 
 // START SERVER
 app.listen(3000, () => {
-  console.log("Server is now listening at port 3000 on http://localhost:3000/");
+	console.log('Server is now listening at port 3000 on http://localhost:3000/');
 });
