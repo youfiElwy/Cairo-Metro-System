@@ -1,3 +1,18 @@
+new way *-*
+
+just run the function start for station.js file 
+
+
+
+
+
+
+
+
+
+
+
+old way *-*-*
 how to run this folder 
 it must done in order 
 in station call start only when u run for the first time 
