@@ -1,6 +1,9 @@
 const express = require("express"); //to impoert express
-const app = express(); //to use express funstions (post / get .. )
+// const app = express(); //to use express funstions (post / get .. )
 const cors = require("cors"); //to import cors to help us manpultaing differenet ports easi;y
+const get_user = require ('../routes/public/get_user')
+module.exports = function(app){
+
 const {
   floydWarshall,
   getShortestPaths,
@@ -10,11 +13,11 @@ const {
   stations,
 } = require("./pricing_alog.js");
 const db = require("../connectors/db"); //import the databse file
+
 // const { loadRouteDB } = require("./route.js");
 //middleware
 app.use(cors());
 app.use(express.json());
-
 
 async function emptyTable(tableName) {
   try {
@@ -36,6 +39,7 @@ async function emptyTable(tableName) {
 //create station
 app.post("/station", async (req, res) => {
   try {
+const user = await get_user(req)
     const { description } = req.body;
     //check if it was posted before
     const found = await db("station")
@@ -48,11 +52,11 @@ app.post("/station", async (req, res) => {
       res.status(400).send("This station is already exists ");
     }
     const newStation = await db("station").insert({
-      column1: "location",
-      column2: description,
-      column3: 1,
+      lokation: "location",
+      description: description,
+      admin_id: user.user_id,
     });
-    const insertedRow = await db("station").where("id", newStation[0]).first();
+    const insertedRow = await db("station").where("description", description).first();
     res.json(insertedRow);
   } catch (error) {
     console.error(error.message);
@@ -267,6 +271,7 @@ async function start() {
 }
 // pricing_algorithm();
 start();
+}
 // emptyTable("all_possible_pathes")
 // const checkPromisesStatus = () => {
 //   for( l of promises)
