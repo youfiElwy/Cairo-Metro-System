@@ -16,9 +16,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 //new 3 apis
 
-const station = require("./apis/station");
-const zones = require("./apis/zones");
-const route = require("./apis/route");
+const station = require("./routes/private/system_stations/statoin");
+const zones = require("./routes/private/system_stations/zones");
+const route = require("./routes/private/system_stations/route");
 
 const signup_route = require("./routes/public/user_sign_up");
 
