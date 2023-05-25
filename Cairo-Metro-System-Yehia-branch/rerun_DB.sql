@@ -44,7 +44,7 @@ Create Table transactions (
 );
 
 Create Table station (
-	station_id serial,
+
 	lokation character varying(30),
 	description character varying(200),
 	admin_ID integer,
