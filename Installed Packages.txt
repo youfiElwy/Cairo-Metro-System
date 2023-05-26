@@ -9,6 +9,9 @@ npm install pg
 npm install uuid
 npm install @sendgrid/mail
 
+npm install react react-dom
+npm install react-scripts
+
 
 extra:
 dotenv
