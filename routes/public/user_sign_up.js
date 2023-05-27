@@ -6,7 +6,7 @@ const crypto = require('crypto');
 function hashPassword(password) {
 	const salt = crypto.randomBytes(16).toString('hex');
 	const hash = crypto.pbkdf2Sync(password, salt, 1000, 64, 'sha512').toString('hex');
-	return { salt, hash };
+	return [salt, hash];
 }
 
 // Package for sending emails
@@ -33,11 +33,13 @@ module.exports = function (app) {
 		const ageInMilliseconds = currentDate - birthdate;
 		const millisecondsPerYear = 1000 * 60 * 60 * 24 * 365.25;
 		const age = Math.floor(ageInMilliseconds / millisecondsPerYear);
+		const hash = hashPassword(req.body.password);
 
 		const newUser = {
 			username: req.body.username,
 			email: req.body.email,
-			password: req.body.password,
+			password: hash[1],
+			salt: hash[0],
 			birthdate: req.body.birthdate,
 			age,
 			gender: req.body.gender,
