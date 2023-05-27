@@ -32,7 +32,7 @@ module.exports = function (app) {
 			return res.status(400).send('user does not exist');
 		}
 
-		if (user.password !== password) {
+		if (verifyPassword(password,user.password,user.salt)) {
 			return res.status(401).send('Password does not match');
 		}
 		//return res.status(200).send('login successful');
