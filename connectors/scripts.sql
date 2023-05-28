@@ -1,4 +1,3 @@
-
 Create Table users (
 	user_ID serial,
 	username character varying(30),
@@ -33,6 +32,7 @@ Create Table transactions (
 );
 
 Create Table station (
+
 	lokation character varying(30),
 	description character varying(200),
 	admin_ID integer,
@@ -44,6 +44,7 @@ Create Table station (
 Create Table route (
 	origin character varying(30),
 	destination character varying(30),
+    name character varying(200),
 	
 	admin_ID integer,
 	
