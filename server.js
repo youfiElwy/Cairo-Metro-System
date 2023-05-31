@@ -30,6 +30,7 @@ const user_forgot_password_new_password_route = require('./routes/public/forgot_
 const get_user_subscription_route = require('./routes/private/user_subscriptions/get_user_subscription');
 const pay_for_subscription_route = require('./routes/private/user_subscriptions/pay_for_subscription');
 const cancel_subscription_route = require('./routes/private/user_subscriptions/cancel_subscription');
+const get_user_tickets = require('./routes/private/user_tickets/get_user_tickets');
 const pay_for_ticket_route = require('./routes/private/user_tickets/pay_for_ticket');
 const pay_for_ticket_by_sub_route = require('./routes/private/user_tickets/pay_for_ticket_by_Sub');
 const rideStarted = require('./routes/private/user_rides/simulate_ride_start');
@@ -52,6 +53,7 @@ app.use(authMiddleware);
 // PRIVATE ROUTES
 logout_route(app);
 refund_request_route(app);
+get_user_tickets(app);
 get_user_subscription_route(app);
 pay_for_subscription_route(app);
 cancel_subscription_route(app);
