@@ -30,14 +30,20 @@ const user_forgot_password_new_password_route = require('./routes/public/forgot_
 const get_user_subscription_route = require('./routes/private/user_subscriptions/get_user_subscription');
 const pay_for_subscription_route = require('./routes/private/user_subscriptions/pay_for_subscription');
 const cancel_subscription_route = require('./routes/private/user_subscriptions/cancel_subscription');
+const get_user_tickets = require('./routes/private/user_tickets/get_user_tickets');
 const pay_for_ticket_route = require('./routes/private/user_tickets/pay_for_ticket');
 const pay_for_ticket_by_sub_route = require('./routes/private/user_tickets/pay_for_ticket_by_Sub');
 const rideStarted = require('./routes/private/user_rides/simulate_ride_start');
 const rideEnded = require('./routes/private/user_rides/simulate_ride_end');
 const user_senior_requests = require('./routes/private/user_requests/user_senior_request');
 const admin_manage_senior_requests = require('./routes/private/admin_manage_requests/admin_manage_senior_requests');
+<<<<<<< Updated upstream
 const superadmin_register_admin = require('./routes/private/superAdmin/superAdmin_register_admin');
 const admin_manage_refund_requests = require('./routes/private/admin_manage_requests/admin_manage_refund_requests');
+=======
+const admin_manage_refund_requests = require('./routes/private/admin_manage_requests/admin_manage_refund_requests');
+const superadmin_register_admin = require('./routes/private/superAdmin/superAdmin_register_admin');
+>>>>>>> Stashed changes
 
 // PUBLIC ROUTES
 signup_route(app);
@@ -52,6 +58,7 @@ app.use(authMiddleware);
 // PRIVATE ROUTES
 logout_route(app);
 refund_request_route(app);
+get_user_tickets(app);
 get_user_subscription_route(app);
 pay_for_subscription_route(app);
 cancel_subscription_route(app);
