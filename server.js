@@ -37,13 +37,10 @@ const rideStarted = require('./routes/private/user_rides/simulate_ride_start');
 const rideEnded = require('./routes/private/user_rides/simulate_ride_end');
 const user_senior_requests = require('./routes/private/user_requests/user_senior_request');
 const admin_manage_senior_requests = require('./routes/private/admin_manage_requests/admin_manage_senior_requests');
-<<<<<<< Updated upstream
 const superadmin_register_admin = require('./routes/private/superAdmin/superAdmin_register_admin');
 const admin_manage_refund_requests = require('./routes/private/admin_manage_requests/admin_manage_refund_requests');
-=======
 const admin_manage_refund_requests = require('./routes/private/admin_manage_requests/admin_manage_refund_requests');
 const superadmin_register_admin = require('./routes/private/superAdmin/superAdmin_register_admin');
->>>>>>> Stashed changes
 
 // PUBLIC ROUTES
 signup_route(app);
