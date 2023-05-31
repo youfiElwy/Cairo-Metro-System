@@ -39,8 +39,6 @@ const user_senior_requests = require('./routes/private/user_requests/user_senior
 const admin_manage_senior_requests = require('./routes/private/admin_manage_requests/admin_manage_senior_requests');
 const superadmin_register_admin = require('./routes/private/superAdmin/superAdmin_register_admin');
 const admin_manage_refund_requests = require('./routes/private/admin_manage_requests/admin_manage_refund_requests');
-const admin_manage_refund_requests = require('./routes/private/admin_manage_requests/admin_manage_refund_requests');
-const superadmin_register_admin = require('./routes/private/superAdmin/superAdmin_register_admin');
 
 // PUBLIC ROUTES
 signup_route(app);
