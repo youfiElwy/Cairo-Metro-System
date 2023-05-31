@@ -16,6 +16,7 @@ module.exports = function (app) {
 		if (!ticket_id) {
 			return res.status(400).send('Ticket ID is required');
 		}
+
 		const ticketExists = await db
 			.select('*')
 			.from('ticket')

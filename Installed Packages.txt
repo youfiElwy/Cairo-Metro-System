@@ -1,3 +1,5 @@
+npm install express  body-parser  hjs knex   lodash  pg uuid
+
 npm install express
 npm install body-parser
 npm install hjs
@@ -6,6 +8,9 @@ npm install lodash
 npm install pg
 npm install uuid
 npm install @sendgrid/mail
+
+npm install react react-dom
+npm install react-scripts
 
 
 extra:
