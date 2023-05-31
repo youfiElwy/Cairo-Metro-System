@@ -9,8 +9,8 @@ const bodyParser = require('body-parser');
 // IMPORT AUTHENTICATION MIDDLEWARE
 const authMiddleware = require('./middleware/auth');
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+const cors = require('cors');
+app.use(cors());
 
 // ALL ROUTES
 
