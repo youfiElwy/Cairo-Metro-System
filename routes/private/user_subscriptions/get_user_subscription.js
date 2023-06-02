@@ -15,7 +15,8 @@ module.exports = function (app) {
 			const subscrib = await db
 				.select('*')
 				.from('subscriptions')
-				.where('user_id', userId)
+				.innerJoin('transactions', 'subscriptions.trans_id', 'transactions.trans_id')
+				.where('subscriptions.user_id', userId)
 				.returning('*');
 
 			if (isEmpty(subscrib)) {
