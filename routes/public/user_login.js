@@ -5,8 +5,8 @@ const bodyParser = require('body-parser');
 const crypto = require('crypto');
 
 function verifyPassword(password, hash, salt) {
-  const verifyHash = crypto.pbkdf2Sync(password, salt, 1000, 64, 'sha512').toString('hex');
-  return verifyHash === hash;
+	const verifyHash = crypto.pbkdf2Sync(password, salt, 1000, 64, 'sha512').toString('hex');
+	return verifyHash === hash;
 }
 
 module.exports = function (app) {
@@ -32,7 +32,7 @@ module.exports = function (app) {
 			return res.status(400).send('user does not exist');
 		}
 
-		if (user.password !== password) {
+		if (verifyPassword(password, user.password, user.salt)) {
 			return res.status(401).send('Password does not match');
 		}
 		//return res.status(200).send('login successful');
@@ -57,7 +57,7 @@ module.exports = function (app) {
 			return res
 				.cookie('session_token', token, { expires: expiresat })
 				.status(200)
-				.send('login successful');
+				.json([token,200]);
 		} catch (err) {
 			console.log(err.message);
 			return res.status(400).send('Could not login user////--> could not enter session into DB');

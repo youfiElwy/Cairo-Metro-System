@@ -9,8 +9,8 @@ const bodyParser = require('body-parser');
 // IMPORT AUTHENTICATION MIDDLEWARE
 const authMiddleware = require('./middleware/auth');
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+const cors = require('cors');
+app.use(cors());
 
 // ALL ROUTES
 
@@ -40,7 +40,7 @@ const user_senior_requests = require('./routes/private/user_requests/user_senior
 const admin_manage_senior_requests = require('./routes/private/admin_manage_requests/admin_manage_senior_requests');
 const superadmin_register_admin = require('./routes/private/superAdmin/superAdmin_register_admin');
 const admin_manage_refund_requests = require('./routes/private/admin_manage_requests/admin_manage_refund_requests');
-
+const reser_password = require('./routes/private/reset_password/reset_password');
 // PUBLIC ROUTES
 signup_route(app);
 login_route(app);
@@ -72,6 +72,7 @@ rideEnded(app);
 station(app);
 route(app);
 zones(app);
+reser_password(app);
 
 // HANDLE IF WE DID NOT FIND THE ROUTE WE WERE LOOKING FOR
 app.use(function (req, res, next) {
