@@ -57,7 +57,7 @@ module.exports = function (app) {
 			return res
 				.cookie('session_token', token, { expires: expiresat })
 				.status(200)
-				.json([token,200]);
+				.json([token, 200]);
 		} catch (err) {
 			console.log(err.message);
 			return res.status(400).send('Could not login user////--> could not enter session into DB');
