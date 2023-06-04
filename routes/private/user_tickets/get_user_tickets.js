@@ -14,7 +14,9 @@ module.exports = function (app) {
 		// i shouldnt check if user id exists cuz ill get it from the session or smth
 		// which means he definietly exists keda keda
 		try {
-			const user_tickets = await db('ticket').where('ticket.user_id', userId);
+			const user_tickets = await db('users')
+				.where('users.user_id', userId)
+				.innerJoin('ticket', 'users.user_id', 'ticket.user_id');
 			return res.status(200).json(user_tickets);
 		} catch (err) {
 			console.log(err.message);
