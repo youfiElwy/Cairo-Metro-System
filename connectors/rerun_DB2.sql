@@ -8,7 +8,15 @@ Insert Into subscriptions Values(DEFAULT, 'yearly',    1, 1, 'active', 400, 400,
 
 
 Insert Into ticket Values(DEFAULT, 1, 'active', 1, 1, 1, 'Helwan','Tora El-Asmant');
-Insert Into ticket Values(DEFAULT, 1, 'expired', 1, 1, 1, 'Helwan','Ain Helwan');
+Insert Into ticket Values(DEFAULT, 2, 'active', 1, 1, 1, 'Dokki','Bab El Shaaria');
+Insert Into ticket Values(DEFAULT, 3, 'active', 1, 1, 1, 'Dokki','Hesham Barakat');
+Insert Into ticket Values(DEFAULT, 4, 'active', 1, 1, 1, 'Dokki','Koleyet El-Banat');
+Insert Into ticket Values(DEFAULT, 5, 'active', 2, 1, 1, 'Dokki','Maspero');
+Insert Into ticket Values(DEFAULT, 6, 'active', 2, 1, 1, 'Dokki','Qobaa');
+Insert Into ticket Values(DEFAULT, 7, 'expired', 1, 1, 1, 'Dokki','Stadium');
+Insert Into ticket Values(DEFAULT, 8, 'expired', 2, 1, 1, 'El-Demerdash','El-Marg');
+Insert Into ticket Values(DEFAULT, 9, 'expired', 2, 1, 1, 'El-Demerdash','El Bohoos');
+
 
 
 
