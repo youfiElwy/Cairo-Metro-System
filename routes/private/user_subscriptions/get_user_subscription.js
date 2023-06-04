@@ -20,7 +20,24 @@ module.exports = function (app) {
 				.returning('*');
 
 			if (isEmpty(subscrib)) {
-				return res.status(400).send('user does not have any subscriptions');
+				return res.status(400).json([
+					{
+						sub_id: '------',
+						duration: '------',
+						zone_id: '------',
+						trans_id: '------',
+						status: '-----',
+						maxnumberofusages: '------',
+						numberofusages: '------',
+						user_id: '------',
+						amount: '------',
+						transaction_to: '------',
+						trans_date: '------',
+						card_type: '------',
+						credit_card: '------',
+						holder_name: '------',
+					},
+				]);
 			}
 			return res.status(200).json(subscrib);
 		} catch (err) {
