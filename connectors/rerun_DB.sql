@@ -219,11 +219,26 @@ Insert Into users Values(DEFAULT, 'ossama', 'ossama', '658d1c0474c633f7417c16f43
 
 
 
-Insert Into transactions Values(DEFAULT, 140000,'payment', '12/31/1999', 'Visa', 1, 'holder1', 1);
-Insert Into transactions Values(DEFAULT, 140000, 'payment','12/31/1999', 'Visa', 1, 'holder1', 1);
-Insert Into transactions Values(DEFAULT, 140000, 'payment','12/31/1999', 'Visa', 1, 'holder1', 1);
-Insert Into transactions Values(DEFAULT, 140000, 'payment','12/31/1999', 'Visa', 2, 'holder1', 1);
-Insert Into transactions Values(DEFAULT, 140000, 'payment','12/31/1999', 'Visa', 2, 'holder1', 1);
+Insert Into transactions Values(DEFAULT, 140000,'payment', '12/31/1997', 'Visa', 1, 'Joe', 3);
+Insert Into transactions Values(DEFAULT, 565, 'payment','12/31/196', 'Visa', 1, 'Ahmed', 3);
+Insert Into transactions Values(DEFAULT, 56, 'payment','12/31/1958', 'Visa', 1, 'Bahy', 2);
+Insert Into transactions Values(DEFAULT, 56, 'payment','12/31/1987', 'Visa', 2, 'Habiba', 2);
+Insert Into transactions Values(DEFAULT, 140000, 'payment','12/31/8588', 'Visa', 2, 'Bahy', 2);
+Insert Into transactions Values(DEFAULT, 55252,'payment', '12/31/7887', 'Visa', 1, 'Habiba', 1);
+Insert Into transactions Values(DEFAULT, 54245254, 'payment','12/31/1999', 'Visa', 1, 'Bahy', 1);
+Insert Into transactions Values(DEFAULT, 2427525, 'payment','12/31/1999', 'Visa', 1, 'Bahy', 2);
+Insert Into transactions Values(DEFAULT, 45255, 'payment','12/31/1999', 'Visa', 2, 'Bahyzeyad', 3);
+Insert Into transactions Values(DEFAULT, 452, 'payment','12/31/1999', 'Visa', 2, 'Youssef', 1);
+Insert Into transactions Values(DEFAULT, 24,'payment', '12/31/1999', 'Visa', 1, 'zeyad', 1);
+Insert Into transactions Values(DEFAULT, 54, 'payment','12/31/1999', 'Visa', 1, 'Youssef', 1);
+Insert Into transactions Values(DEFAULT, 57, 'payment','12/31/1999', 'Visa', 1, 'zeyad', 3);
+Insert Into transactions Values(DEFAULT, 7887, 'payment','12/31/1999', 'Visa', 2, 'Habiba', 2);
+Insert Into transactions Values(DEFAULT, 14078000, 'payment','12/31/1999', 'Visa', 2, 'Habiba', 3);
+Insert Into transactions Values(DEFAULT, 5875,'payment', '12/31/1999', 'Visa', 1, 'zeyad', 1);
+Insert Into transactions Values(DEFAULT, 87, 'payment','12/31/1999', 'Visa', 1, 'Habiba', 1);
+Insert Into transactions Values(DEFAULT, 85, 'payment','12/31/1999', 'Visa', 1, 'Habiba', 3);
+Insert Into transactions Values(DEFAULT, 57, 'payment','12/31/1999', 'Visa', 2, 'Habiba', 3);
+Insert Into transactions Values(DEFAULT, 140000, 'payment','12/31/1999', 'Visa', 2, 'Habiba', 3);
 
 
 
@@ -261,8 +276,15 @@ Insert Into subscriptions Values(DEFAULT, 'yearly',    1, 1, 'active', 400, 400,
 
 
 
-Insert Into ticket Values(DEFAULT, 1, 'active', 1, 1, 1, 1);
-Insert Into ticket Values(DEFAULT, 1, 'expired', 1, 1, 1, 1);
+Insert Into ticket Values(DEFAULT, 1, 'active', 1, 1, Maadi, gesh);
+Insert Into ticket Values(DEFAULT, 1, 'active', 1, 1, Shams, Hadayek);
+Insert Into ticket Values(DEFAULT, 1, 'active', 1, 1, Sarayat, Gaza2er);
+Insert Into ticket Values(DEFAULT, 1, 'active', 1, 1, Sob7, nasr);
+Insert Into ticket Values(DEFAULT, 1, 'expired', 1, 1, Degla, Helwan);
+Insert Into ticket Values(DEFAULT, 1, 'expired', 1, 1, Tagamo3, Octobar);
+Insert Into ticket Values(DEFAULT, 1, 'expired', 1, 1, tagamo3, MasrGedida);
+Insert Into ticket Values(DEFAULT, 1, 'expired', 1, 1, maadi, tagamo3);
+
 
 
 
