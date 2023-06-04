@@ -99,14 +99,8 @@ Insert Into subscriptions Values(DEFAULT, 'yearly',    1, 1, 'active', 400, 400,
 
 
 
-Insert Into ticket Values(DEFAULT, 1, 'active', 1, 1, Maadi, gesh);
-Insert Into ticket Values(DEFAULT, 1, 'active', 1, 1, Shams, Hadayek);
-Insert Into ticket Values(DEFAULT, 1, 'active', 1, 1, Sarayat, Gaza2er);
-Insert Into ticket Values(DEFAULT, 1, 'active', 1, 1, Sob7, nasr);
-Insert Into ticket Values(DEFAULT, 1, 'expired', 1, 1, Degla, Helwan);
-Insert Into ticket Values(DEFAULT, 1, 'expired', 1, 1, Tagamo3, Octobar);
-Insert Into ticket Values(DEFAULT, 1, 'expired', 1, 1, tagamo3, MasrGedida);
-Insert Into ticket Values(DEFAULT, 1, 'expired', 1, 1, maadi, tagamo3);
+Insert Into ticket Values(DEFAULT, 1, 'active', 1, 1, 1, 1);
+Insert Into ticket Values(DEFAULT, 1, 'active', 1, 1, 1, 1);
 
 
 
