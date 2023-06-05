@@ -29,6 +29,10 @@ ALTER SEQUENCE sessions_sessionid_seq RESTART WITH 1;
 
 
 
+
+
+
+
 Insert Into users Values(DEFAULT, 'username1', 'user1', '67e62d0d123cbcf886bbda5dfdb14fc52c2a720b8708030a27c8a93f5b5f3a9284a44249ad353c5b931960e074810ddb24b29856fda16108fb539da1a85d65f6','5f7e9fc841e1bee05792c132f03284bb', '12/31/1999', 27, 'M', 'phone1', 'ssn1', 'normal', 'user');
 Insert Into users Values(DEFAULT, 'username2', 'user2', 'ab9a8cdb370c481af33817a925b4eb147c5de900b827b54e00c2d4faf95f679104bb7d4cadc07a982a24e528436d2898e08ffef5429e3d90fbbed20c98a83f54','d76abe12c82d66bb90dcd9c51a5a4ee9', '12/31/1999', 30, 'F', 'phone2', 'ssn2', 'normal', 'user');
 Insert Into users Values(DEFAULT, 'username3', 'user3', 'bf6e69211ca545f0f904e24cef254b52cbc29447d6947cec142038f64127bb58c762ed1e545318dffb9b14749c26ce563584321bb9d8a392b6cc30517d6efc2e','62832e173636f8cd468d8d34d4946249', '12/31/1999', 87, 'F', 'phone3', 'ssn3', 'normal', 'user');
@@ -42,71 +46,16 @@ Insert Into users Values(DEFAULT, 'ossama', 'ossama', '658d1c0474c633f7417c16f43
 
 
 
-Insert Into transactions Values(DEFAULT, 140000,'payment', '12/31/1997', 'Visa', 1, 'Joe', 3);
-Insert Into transactions Values(DEFAULT, 565, 'payment','12/31/196', 'Visa', 1, 'Ahmed', 3);
-Insert Into transactions Values(DEFAULT, 56, 'payment','12/31/1958', 'Visa', 1, 'Bahy', 2);
-Insert Into transactions Values(DEFAULT, 56, 'payment','12/31/1987', 'Visa', 2, 'Habiba', 2);
-Insert Into transactions Values(DEFAULT, 140000, 'payment','12/31/8588', 'Visa', 2, 'Bahy', 2);
-Insert Into transactions Values(DEFAULT, 55252,'payment', '12/31/7887', 'Visa', 1, 'Habiba', 1);
-Insert Into transactions Values(DEFAULT, 54245254, 'payment','12/31/1999', 'Visa', 1, 'Bahy', 1);
-Insert Into transactions Values(DEFAULT, 2427525, 'payment','12/31/1999', 'Visa', 1, 'Bahy', 2);
-Insert Into transactions Values(DEFAULT, 45255, 'payment','12/31/1999', 'Visa', 2, 'Bahyzeyad', 3);
-Insert Into transactions Values(DEFAULT, 452, 'payment','12/31/1999', 'Visa', 2, 'Youssef', 1);
-Insert Into transactions Values(DEFAULT, 24,'payment', '12/31/1999', 'Visa', 1, 'zeyad', 1);
-Insert Into transactions Values(DEFAULT, 54, 'payment','12/31/1999', 'Visa', 1, 'Youssef', 1);
-Insert Into transactions Values(DEFAULT, 57, 'payment','12/31/1999', 'Visa', 1, 'zeyad', 3);
-Insert Into transactions Values(DEFAULT, 7887, 'payment','12/31/1999', 'Visa', 2, 'Habiba', 2);
-Insert Into transactions Values(DEFAULT, 14078000, 'payment','12/31/1999', 'Visa', 2, 'Habiba', 3);
-Insert Into transactions Values(DEFAULT, 5875,'payment', '12/31/1999', 'Visa', 1, 'zeyad', 1);
-Insert Into transactions Values(DEFAULT, 87, 'payment','12/31/1999', 'Visa', 1, 'Habiba', 1);
-Insert Into transactions Values(DEFAULT, 85, 'payment','12/31/1999', 'Visa', 1, 'Habiba', 3);
-Insert Into transactions Values(DEFAULT, 57, 'payment','12/31/1999', 'Visa', 2, 'Habiba', 3);
-Insert Into transactions Values(DEFAULT, 140000, 'payment','12/31/1999', 'Visa', 2, 'Habiba', 3);
+Insert Into transactions Values(DEFAULT, 140000,'payment', '12/31/1999', 'Visa', 1, 'holder1', 1);
+Insert Into transactions Values(DEFAULT, 140000, 'payment','12/31/1999', 'Visa', 1, 'holder1', 1);
+Insert Into transactions Values(DEFAULT, 140000, 'payment','12/31/1999', 'Visa', 1, 'holder1', 1);
+Insert Into transactions Values(DEFAULT, 140000, 'payment','12/31/1999', 'Visa', 2, 'holder1', 1);
+Insert Into transactions Values(DEFAULT, 140000, 'payment','12/31/1999', 'Visa', 2, 'holder1', 1);
 
 
-
--- Insert Into station Values(DEFAULT, 'maadi',     'description1', 6);
--- Insert Into station Values(DEFAULT, 'tagamo3',   'description2', 6);
--- Insert Into station Values(DEFAULT, 'rehaab',    'description3', 6);
--- Insert Into station Values(DEFAULT, '6 Octobar', 'description4', 6);
--- Insert Into station Values(DEFAULT, 'zahraa',    'description5', 6);
-
-
-
--- Insert Into route Values(DEFAULT, 'origin1', 'destination1', 6);
--- Insert Into route Values(DEFAULT, 'origin2', 'destination2', 6);
--- Insert Into route Values(DEFAULT, 'origin3', 'destination3', 6);
--- Insert Into route Values(DEFAULT, 'origin4', 'destination4', 6);
--- Insert Into route Values(DEFAULT, 'origin5', 'destination5', 6);
-
-
--- INSERT INTO possible_routes (origin, destination, number_of_stations, path)
--- VALUES ('final_origin1', 'final_destination1', 6, array_append('{}', 'path'));
-
--- INSERT INTO possible_routes (origin, destination, number_of_stations, path)
--- VALUES ('final_origin2', 'final_destination2', 6, array_append('{}', 'path'));
-
-
-
-Insert Into zones Values(DEFAULT, 1, 10, 16);
-
-
-
-Insert Into subscriptions Values(DEFAULT, 'monthly',   1, 1, 'active', 15, 15,   1);
-Insert Into subscriptions Values(DEFAULT, 'quarterly', 1, 1, 'active', 150, 150, 2);
-Insert Into subscriptions Values(DEFAULT, 'yearly',    1, 1, 'active', 400, 400, 3);
-
-
-
-
-Insert Into ticket Values(DEFAULT, 1, 'active', 1, 1, 1, 1);
-Insert Into ticket Values(DEFAULT, 1, 'active', 1, 1, 1, 1);
-
-
-
-
-Insert Into ride Values(DEFAULT, 'upcoming','1999-01-08 04:05:06', '1999-01-08 04:05:06', 1);
-Insert Into ride Values(DEFAULT, 'in_progress','1999-01-08 04:05:06', '1999-01-08 04:05:06', 2);
+Insert Into zones Values(DEFAULT, 1, 9, 5);
+Insert Into zones Values(DEFAULT, 10, 16, 7);
+Insert Into zones Values(DEFAULT, 17, 1000, 10);
 
 
 
@@ -114,6 +63,8 @@ Insert Into senior_request Values(DEFAULT, 'processing', 49, 1);
 Insert Into senior_request Values(DEFAULT, 'processing', 40, 2);
 
 
+Insert Into subscriptions Values(DEFAULT, 'monthly',   1, 1, 'active', 15, 15,   1);
+Insert Into subscriptions Values(DEFAULT, 'quarterly', 1, 1, 'active', 150, 150, 2);
+Insert Into subscriptions Values(DEFAULT, 'yearly',    1, 1, 'active', 400, 400, 3);
 
-Insert Into refund_request Values(DEFAULT, 'processing', 'description', 1, null, 1);
-Insert Into refund_request Values(DEFAULT, 'processing', 'description', 2, null, 2);
+

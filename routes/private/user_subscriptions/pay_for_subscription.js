@@ -18,7 +18,7 @@ module.exports = function (app) {
 			.where('user_id', userId)
 			.andWhere('status', 'active');
 		if (!isEmpty(subExists)) {
-			return res.status(400).send('user is already subscribed to an active plan');
+			return res.status(400).send([400, 'user is already subscribed to an active plan']);
 		}
 
 		try {
@@ -64,12 +64,12 @@ module.exports = function (app) {
 
 			const newSub = await db('subscriptions').insert(newSubscripEntry).returning('*');
 
-			return res.status(200).send('User successfully subscribed to a plan');
+			return res.status(200).send([200, 'User successfully subscribed to a plan']);
 		} catch (err) {
 			console.log(err.message);
 			return res
-				.status(400)
-				.send('Error: Could not enter transaction/subscription into database');
+				.status(401)
+				.send([401, 'Error: Could not enter transaction/subscription into database']);
 		}
 	});
 };

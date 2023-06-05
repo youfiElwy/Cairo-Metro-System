@@ -21,7 +21,8 @@ module.exports = function (app) {
   async function emptyTable(tableName) {
     try {
       // Step 1: Delete all rows from the table
-      await db(tableName).del();
+      await db.raw(`TRUNCATE TABLE "${tableName}" RESTART IDENTITY CASCADE`);
+
       // Step 2: Reset the sequence
       // const resetQuery = `ALTER SEQUENCE ${tableName}_${tableName}_id_seq RESTART WITH 1`;
       // await pool.query(resetQuery);
@@ -173,6 +174,10 @@ module.exports = function (app) {
   // const { log } = require("console");
   // console.log(vp);
   async function loadStationDB() {
+    await emptyTable("refund_request");
+    await emptyTable("ride");
+    await emptyTable("ticket");
+
     await emptyTable("station");
     // console.log(vp);
 
@@ -216,14 +221,70 @@ module.exports = function (app) {
       }
     }
   }
+  async function loadInserts() {
+    await db("ticket").insert({
+      // trans_id: 1,
+      status: "active",
+      trans_id: 1,
+      user_id: 1,
+      sub_id: 1,
+      zone_id: 1,
+      origin: "Helwan",
+      destination: "Tora El-Asmant",
+    });
+    await db("ticket").insert({
+      // trans_id: 1,
+      status: "expired",
+      trans_id: 1,
+      user_id: 1,
+      sub_id: 1,
+      zone_id: 1,
+      origin: "Helwan",
+      destination: "Ain Helwan",
+    });
+    await db("ride").insert({
+      status: "upcoming",
+      start_time: "1999-01-08 04:05:06",
+      end_time: "1999-01-08 04:05:06",
+      ticket_id: 1,
+    });
+    await db("ride").insert({
+      status: "in_progress",
+      start_time: "1999-01-08 04:05:06",
+      end_time: "1999-01-08 04:05:06",
+      ticket_id: 2,
+    });
 
+    await db("refund_request").insert({
+      request_state: "processing",
+      description: "description",
+      ticket_id: 1,
+      admin_id: 1,
+      user_id: 1,
+    });
+
+    await db("refund_request").insert({
+      request_state: "processing",
+      description: "description",
+      ticket_id: 2,
+      admin_id: 1,
+      user_id: 2,
+    });
+  }
   //pricing_algorithm()
 
   async function pricing_algorithm() {
     await emptyTable("all_possible_pathes");
+    // await db.raw('TRUNCATE TABLE all_possible_pathes RESTART IDENTITY CASCADE');
+
+    // const lol = await db.select("*").from("all_possible_pathes")
+    // console.log(lol)
     //console.log(numEdges.length);
     for (let i = 0; i < numEdges.length; i++) {
-      for (let j = i + 1; j < numEdges.length; j++) {
+      for (let j = 0; j < numEdges.length; j++) {
+        if (i == j) continue;
+
+        // console.log( "meeeee     "+vp[i][1] +"  "+ vp[j][1]);
         await db("all_possible_pathes").insert({
           origin: vp[i][1],
           destination: vp[j][1],
@@ -287,6 +348,7 @@ module.exports = function (app) {
     await loadStationDB();
     await loadRouteDB();
     await pricing_algorithm();
+    await loadInserts();
     console.log("start done");
   }
   // pricing_algorithm();

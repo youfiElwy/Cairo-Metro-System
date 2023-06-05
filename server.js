@@ -44,6 +44,8 @@ const get_refund_requests =require('./routes/private/admin_manage_requests/get_r
 const superadmin_register_admin = require('./routes/private/superAdmin/superAdmin_register_admin');
 const reset_password = require('./routes/private/reset_password/reset_password');
 const test = require('./routes/private/stripeTest/test');
+const get_current_user = require('./routes/public/get_cur_user');
+
 // PUBLIC ROUTES
 signup_route(app);
 login_route(app);
@@ -51,7 +53,9 @@ user_forgot_password_route(app);
 user_forgot_password_verify_route(app);
 user_forgot_password_new_password_route(app);
 test(app);
-// CALL AUTHENTICATION MIDDLEWARE
+get_current_user(app);
+
+
 app.use(authMiddleware);
 
 // PRIVATE ROUTES
