@@ -3,6 +3,8 @@
 Insert Into subscriptions Values(DEFAULT, 'monthly',   1, 1, 'active', 15, 15,   1);
 Insert Into subscriptions Values(DEFAULT, 'quarterly', 1, 1, 'active', 150, 150, 2);
 Insert Into subscriptions Values(DEFAULT, 'yearly',    1, 1, 'active', 400, 400, 3);
+Insert Into subscriptions Values(DEFAULT, 'monthly',   1, 1, 'canceled', 15, 15,   1);
+Insert Into subscriptions Values(DEFAULT, 'monthly',   1, 1, 'canceled', 15, 15,   1);
 
 
 
