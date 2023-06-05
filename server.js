@@ -38,9 +38,12 @@ const rideStarted = require('./routes/private/user_rides/simulate_ride_start');
 const rideEnded = require('./routes/private/user_rides/simulate_ride_end');
 const user_senior_requests = require('./routes/private/user_requests/user_senior_request');
 const admin_manage_senior_requests = require('./routes/private/admin_manage_requests/admin_manage_senior_requests');
-const superadmin_register_admin = require('./routes/private/superAdmin/superAdmin_register_admin');
 const admin_manage_refund_requests = require('./routes/private/admin_manage_requests/admin_manage_refund_requests');
-const reser_password = require('./routes/private/reset_password/reset_password');
+const get_senior_requests =require('./routes/private/admin_manage_requests/get_senior_requests');
+const get_refund_requests =require('./routes/private/admin_manage_requests/get_refund_requests');
+const superadmin_register_admin = require('./routes/private/superAdmin/superAdmin_register_admin');
+const reset_password = require('./routes/private/reset_password/reset_password');
+
 // PUBLIC ROUTES
 signup_route(app);
 login_route(app);
@@ -66,13 +69,15 @@ rideEnded(app);
 user_senior_requests(app);
 admin_manage_senior_requests(app);
 admin_manage_refund_requests(app);
+get_senior_requests(app);
+get_refund_requests(app);
 superadmin_register_admin(app);
 rideStarted(app);
 rideEnded(app);
 station(app);
 route(app);
 zones(app);
-reser_password(app);
+reset_password(app);
 
 // HANDLE IF WE DID NOT FIND THE ROUTE WE WERE LOOKING FOR
 app.use(function (req, res, next) {
