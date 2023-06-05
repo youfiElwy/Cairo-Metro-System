@@ -271,7 +271,9 @@ Insert Into transactions Values(DEFAULT, 140000, 'payment','12/31/1999', 'Visa',
 
 
 
-Insert Into zones Values(DEFAULT, 1, 10, 16);
+Insert Into zones Values(DEFAULT, 1, 9, 5);
+Insert Into zones Values(DEFAULT, 10, 16, 7);
+Insert Into zones Values(DEFAULT, 17, 1000, 10);
 
 
 -----
