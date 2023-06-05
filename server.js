@@ -41,12 +41,15 @@ const admin_manage_senior_requests = require('./routes/private/admin_manage_requ
 const superadmin_register_admin = require('./routes/private/superAdmin/superAdmin_register_admin');
 const admin_manage_refund_requests = require('./routes/private/admin_manage_requests/admin_manage_refund_requests');
 const reser_password = require('./routes/private/reset_password/reset_password');
+const get_current_user = require('./routes/public/get_cur_user');
+
 // PUBLIC ROUTES
 signup_route(app);
 login_route(app);
 user_forgot_password_route(app);
 user_forgot_password_verify_route(app);
 user_forgot_password_new_password_route(app);
+get_current_user(app);
 
 // CALL AUTHENTICATION MIDDLEWARE
 app.use(authMiddleware);
