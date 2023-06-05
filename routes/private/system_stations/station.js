@@ -174,6 +174,10 @@ module.exports = function (app) {
   // const { log } = require("console");
   // console.log(vp);
   async function loadStationDB() {
+    await emptyTable("refund_request");
+    await emptyTable("ride");
+    await emptyTable("ticket");
+
     await emptyTable("station");
     // console.log(vp);
 
@@ -218,7 +222,6 @@ module.exports = function (app) {
     }
   }
   async function loadInserts() {
-    emptyTable("ticket");
     await db("ticket").insert({
       // trans_id: 1,
       status: "active",
@@ -239,7 +242,6 @@ module.exports = function (app) {
       origin: "Helwan",
       destination: "Ain Helwan",
     });
-    emptyTable("ride");
     await db("ride").insert({
       status: "upcoming",
       start_time: "1999-01-08 04:05:06",
@@ -252,7 +254,6 @@ module.exports = function (app) {
       end_time: "1999-01-08 04:05:06",
       ticket_id: 2,
     });
-    emptyTable("refund_request");
 
     await db("refund_request").insert({
       request_state: "processing",
