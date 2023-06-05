@@ -18,7 +18,7 @@ module.exports = function (app) {
 			.where('user_id', userId)
 			.andWhere('status', 'active');
 		if (isEmpty(subExists)) {
-			return res.status(401).send([401, 'user is not subscribed to an active plan']);
+			return res.status(401).json([401, 'user is not subscribed to an active plan']);
 		}
 
 		try {
