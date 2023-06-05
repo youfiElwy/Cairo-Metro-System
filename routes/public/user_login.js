@@ -18,22 +18,22 @@ module.exports = function (app) {
 		const { email, password } = req.body;
 		if (!email) {
 			// If the email is not present, return an HTTP unauthorized code
-			return res.status(400).send('email is required');
+			return res.status(400).send([400,'email is required']);
 		}
 		if (!password) {
 			// If the password is not present, return an HTTP unauthorized code
-			return res.status(400).send('Password is required');
+			return res.status(401).send([401,'Password is required']);
 		}
 
 		// validate the provided password against the password in the database
 		// if invalid, send an unauthorized code
 		const user = await db.select('*').from('users').where('email', email).first();
 		if (isEmpty(user)) {
-			return res.status(400).send('user does not exist');
+			return res.status(402).send([402,'user does not exist']);
 		}
 
 		if (!verifyPassword(password, user.password, user.salt)) {
-			return res.status(401).send('Password does not match');
+			return res.status(403).send([403,'Wrong Password']);
 		}
 		//return res.status(200).send('login successful');
 
@@ -57,10 +57,10 @@ module.exports = function (app) {
 			return res
 				.cookie('session_token', token, { expires: expiresat })
 				.status(200)
-				.json([token, 200]);
+				.json([200, token]);
 		} catch (err) {
 			console.log(err.message);
-			return res.status(400).send('Could not login user////--> could not enter session into DB');
+			return res.status(404).send([404,'Could not login user////--> could not enter session into DB']);
 		}
 	});
 };
