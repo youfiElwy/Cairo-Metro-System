@@ -7,7 +7,7 @@ module.exports = function (app) {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
 
-  app.post("/api/v1/payment/ticket/", async function (req, res) {
+  app.post("/api/v1/payment/subscription/ticket/", async function (req, res) {
     const user = await getUser(req);
     const userId = user.user_id;
 
@@ -29,7 +29,6 @@ module.exports = function (app) {
     // ABOUT SUBcriiption buy ticket problem
     // check if he already has a ticket to that ride
     // check if hes subscribed. if yes then get insert into ticket then ride. then decrement number of rides from subscription
-    //
 
     const ticketExists = await db
       .select("*")
@@ -39,7 +38,7 @@ module.exports = function (app) {
       .andWhere("origin", routeOrigin)
       .andWhere("destination", routeDestination)
       .andWhere("ride.status", "IN", ["upcoming", "in_progress"]);
-    if (!ticketExists) {
+    if (!isEmpty(ticketExists)) {
       return res
         .status(400)
         .send("user already purchased a ticket to this ride");
@@ -47,7 +46,7 @@ module.exports = function (app) {
 
     number_of_stations = possibleRoute[0].number_of_stations;
     let price = 100;
-	let zone_id = 100
+    let zone_id = 100;
     const zones = await db.select("*").from("zones");
     for (cur_zone of zones) {
       if (cur_zone.maximumstations >= number_of_stations) {
@@ -57,36 +56,43 @@ module.exports = function (app) {
         break;
       }
     }
-    // console.log(price);
+    console.log(price);
 
     try {
-      if (user.isSenior) {
-        price = price * 0.5;
-        // reduce amount/price by 50 %
-        // and then 7ot fel transaction the new price
-      }
+      const subscription = await db
+        .select("*")
+        .from("subscriptions")
+        .where('status',"active" )
+        .andWhere("user_id", userId);
+		console.log(subscription);
+      if (isEmpty( subscription))
+        return res.status(400).send("Error: Could find any subscription");
+		console.log(123);
+      let avialbe_subscription = subscription[0].numberofusages;
 
-      const newTransaction = {
-        amount: price, // YEHIA --> Update--> get price from zones table n stuff
-        trans_date: new Date(Date.now()),
-        card_type: req.body.card_type,
-        credit_card: req.body.credit_card, // credit card number
-        holder_name: req.body.holder_name,
-        user_id: userId,
-        transaction_to: "Metro",
-      };
+      if (avialbe_subscription <= 0)
+        return res
+          .status(400)
+          .send("Error: You reached your subscription usage limit");
 
-      const newTransactionEntry = await db("transactions")
-        .insert(newTransaction)
-        .returning("*");
+		  if(subscription[0].zone_id>zone_id)
+		  return res
+          .status(400)
+          .send("Error: you can't pay this ticket it has zone_id bigger");
+      let sub__id = subscription[0].sub_id;
+		console.log(524);
+
+      await db("subscriptions")
+        .where("sub_id", sub__id)
+        .update({ "numberofusages": avialbe_subscription - 1 });
 
       const newTicket = {
-        trans_id: newTransactionEntry[0].trans_id,
+        trans_id: null,
         status: "active",
         user_id: userId,
         origin: routeOrigin,
         destination: routeDestination,
-        sub_id: req.body.sub_id,
+        sub_id: sub__id,
         zone_id: zone_id,
       };
 
