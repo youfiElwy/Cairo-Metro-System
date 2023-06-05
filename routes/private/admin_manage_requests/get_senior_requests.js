@@ -10,7 +10,7 @@ module.exports = function (app) {
 		const userInfo = await getUser(req);
 
 		if (userInfo.isSuperAdmin == false && userInfo.isAdmin == false) {
-			return res.status(400).send('Error you are not an admin');
+			return res.status(400).send([400,'Error you are not an admin']);
 		}
 		const seniorRequests = await db
 			.select('*')

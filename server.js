@@ -43,14 +43,14 @@ const get_senior_requests =require('./routes/private/admin_manage_requests/get_s
 const get_refund_requests =require('./routes/private/admin_manage_requests/get_refund_requests');
 const superadmin_register_admin = require('./routes/private/superAdmin/superAdmin_register_admin');
 const reset_password = require('./routes/private/reset_password/reset_password');
-
+const test = require('./routes/private/stripeTest/test');
 // PUBLIC ROUTES
 signup_route(app);
 login_route(app);
 user_forgot_password_route(app);
 user_forgot_password_verify_route(app);
 user_forgot_password_new_password_route(app);
-
+test(app);
 // CALL AUTHENTICATION MIDDLEWARE
 app.use(authMiddleware);
 
