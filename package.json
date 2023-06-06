@@ -31,6 +31,7 @@
 		"knex": "^2.4.2",
 		"lodash": "^4.17.21",
 		"pg": "^8.11.0",
+		"stripe": "^12.8.0",
 		"uuid": "^9.0.0"
 	},
 	"devDependencies": {

@@ -16,6 +16,7 @@ module.exports = function (app) {
 				.select('*')
 				.from('subscriptions')
 				.innerJoin('transactions', 'subscriptions.trans_id', 'transactions.trans_id')
+				.innerJoin('zones', 'subscriptions.zone_id', 'zones.zone_id')
 				.where('subscriptions.user_id', userId)
 				.returning('*');
 
@@ -28,6 +29,8 @@ module.exports = function (app) {
 						trans_id: '------',
 						status: '-----',
 						maxnumberofusages: '------',
+						minimumstations: '------',
+						maximumstations: '------',
 						numberofusages: '------',
 						user_id: '------',
 						amount: '------',
