@@ -219,11 +219,11 @@ Insert Into users Values(DEFAULT, 'ossama', 'ossama', '658d1c0474c633f7417c16f43
 
 
 
-Insert Into transactions Values(DEFAULT, 140000,'payment', '12/31/1999', 'Visa', 1, 'holder1', 1);
-Insert Into transactions Values(DEFAULT, 140000, 'payment','12/31/1999', 'Visa', 1, 'holder1', 1);
-Insert Into transactions Values(DEFAULT, 140000, 'payment','12/31/1999', 'Visa', 1, 'holder1', 1);
-Insert Into transactions Values(DEFAULT, 140000, 'payment','12/31/1999', 'Visa', 2, 'holder1', 1);
-Insert Into transactions Values(DEFAULT, 140000, 'payment','12/31/1999', 'Visa', 2, 'holder1', 1);
+Insert Into transactions Values(DEFAULT, 5, 'payment', '12/31/1999', 'Visa', 12345, 'joe', 1);
+Insert Into transactions Values(DEFAULT, 5, 'payment', '12/31/1999', 'Visa', 12345, 'joe', 1);
+Insert Into transactions Values(DEFAULT, 5, 'payment', '12/31/1999', 'Visa', 12345, 'joe', 1);
+
+
 
 
 Insert Into zones Values(DEFAULT, 1, 9, 5);
@@ -239,5 +239,7 @@ Insert Into senior_request Values(DEFAULT, 'processing', 40, 2);
 Insert Into subscriptions Values(DEFAULT, 'monthly',   1, 1, 'active', 15, 15,   1);
 Insert Into subscriptions Values(DEFAULT, 'quarterly', 1, 1, 'active', 150, 150, 2);
 Insert Into subscriptions Values(DEFAULT, 'yearly',    1, 1, 'active', 400, 400, 3);
+Insert Into subscriptions Values(DEFAULT, 'monthly',   1, 1, 'canceled', 15, 15,   1);
+Insert Into subscriptions Values(DEFAULT, 'monthly',   1, 1, 'canceled', 15, 15,   1);
 
 
