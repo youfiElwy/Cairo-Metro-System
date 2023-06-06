@@ -37,7 +37,8 @@ module.exports = function (app) {
 			.where('user_id', userId)
 			.andWhere('origin', routeOrigin)
 			.andWhere('destination', routeDestination)
-			.andWhere('ride.status', 'IN', ['upcoming', 'in_progress']);
+			.andWhere('ride.status', 'IN', ['upcoming', 'in_progress'])
+			.andWhere('ride.start_time', req.body.start_time);
 		if (!isEmpty(ticketExists)) {
 			return res.status(401).send([401, 'user already purchased a ticket to this ride']);
 		}
@@ -68,10 +69,14 @@ module.exports = function (app) {
 			console.log(123);
 			let avialbe_subscription = subscription[0].numberofusages;
 
-			if (avialbe_subscription <= 0)
+			if (avialbe_subscription <= 0) {
+				const updatedSubscription = await db('subscriptions')
+					.update({ status: 'canceled' }) // Replace 'newStatus' with the desired value
+					.where('user_id', userId);
 				return res
 					.status(403)
 					.send([403, 'You have reached your subscription plan usage limit!']);
+			}
 
 			if (subscription[0].zone_id > zone_id)
 				return res
@@ -114,3 +119,5 @@ module.exports = function (app) {
 		}
 	});
 };
+
+//zabat ena when usages finished--> set sub as canceled

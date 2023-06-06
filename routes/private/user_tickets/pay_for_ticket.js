@@ -38,8 +38,9 @@ module.exports = function (app) {
 			.where('user_id', userId)
 			.andWhere('origin', routeOrigin)
 			.andWhere('destination', routeDestination)
-			.andWhere('ride.status', 'IN', ['upcoming', 'in_progress']);
-		if (!ticketExists) {
+			.andWhere('ride.status', 'IN', ['upcoming', 'in_progress'])
+			.andWhere('ride.start_time', req.body.start_time);
+		if (!isEmpty(ticketExists)) {
 			return res.status(401).send([401, 'user already purchased a ticket to this ride']);
 		}
 
@@ -82,7 +83,7 @@ module.exports = function (app) {
 				user_id: userId,
 				origin: routeOrigin,
 				destination: routeDestination,
-				sub_id: req.body.sub_id,
+				sub_id: null,
 				zone_id: zone_id,
 			};
 
