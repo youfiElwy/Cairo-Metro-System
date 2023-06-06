@@ -78,7 +78,10 @@ module.exports = function (app) {
 					.send([403, 'You have reached your subscription plan usage limit!']);
 			}
 
-			if (subscription[0].zone_id > zone_id)
+			console.log(subscription[0].zone_id);
+			console.log(zone_id);
+
+			if (subscription[0].zone_id <= zone_id)
 				return res
 					.status(405)
 					.send([405, 'Your subscription plan does not cover the zones of this ticket!']);
