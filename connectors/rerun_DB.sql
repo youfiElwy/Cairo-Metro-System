@@ -26,6 +26,8 @@ Create Table users (
 	userRole character varying(10),--admin/user/superadmin
 	reset_token character varying(100),
 	reset_token_expiration Timestamp,
+	payment_token character varying(32),
+	payment_token_active boolean,
 	
 	Primary Key (user_ID)
 );

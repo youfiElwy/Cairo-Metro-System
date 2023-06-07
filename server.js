@@ -43,7 +43,8 @@ const get_senior_requests =require('./routes/private/admin_manage_requests/get_s
 const get_refund_requests =require('./routes/private/admin_manage_requests/get_refund_requests');
 const superadmin_register_admin = require('./routes/private/superAdmin/superAdmin_register_admin');
 const reset_password = require('./routes/private/reset_password/reset_password');
-const subscription_stripe = require('./routes/private/user_subscriptions/subscription_stripe');
+const subscription_stripe = require('./routes/private/stripe/subscription_stripe');
+const cancel_stripe =require('./routes/private/stripe/cancel_stripe');
 const get_current_user = require('./routes/public/get_cur_user');
 
 // PUBLIC ROUTES
@@ -82,6 +83,8 @@ route(app);
 zones(app);
 reset_password(app);
 subscription_stripe(app);
+cancel_stripe(app);
+
 
 // HANDLE IF WE DID NOT FIND THE ROUTE WE WERE LOOKING FOR
 app.use(function (req, res, next) {
