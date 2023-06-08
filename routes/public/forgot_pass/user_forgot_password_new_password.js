@@ -1,7 +1,13 @@
 const { isEmpty } = require('lodash');
 const db = require('../../../connectors/db');
 const bodyParser = require('body-parser');
+const crypto = require('crypto');
 
+function hashPassword(password) {
+	const salt = crypto.randomBytes(16).toString('hex');
+	const hash = crypto.pbkdf2Sync(password, salt, 1000, 64, 'sha512').toString('hex');
+	return [salt, hash];
+}
 module.exports = function (app) {
 	app.use(bodyParser.json());
 	app.use(bodyParser.urlencoded({ extended: true }));
@@ -12,7 +18,7 @@ module.exports = function (app) {
 			// const { token } = req.params;
 			console.log(password);
 			console.log(resetToken);
-
+			const hash = hashPassword(password);
 			// const tokenStillExists = await db('users').select('*').where('reset_token', resetToken);
 			const tokenStillExists = await db('users').select('*').where('reset_token', resetToken);
 
@@ -23,7 +29,8 @@ module.exports = function (app) {
 			const updatedUser = await db('users')
 				.where('reset_token', resetToken)
 				.update({
-					password,
+					password: hash[1],
+					salt: hash[0],
 					reset_token: null,
 					reset_token_expiration: null,
 				})
