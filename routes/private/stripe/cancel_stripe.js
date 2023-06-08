@@ -10,11 +10,9 @@ module.exports = function (app) {
     app.post('/stripe/cancel', async function (req, res) {
         const user = await getUser(req);
         const { user_id } = user;
-        const { payment_token } = req.body;
         try {
             const updateToken = await db("users")
                 .where("user_id", user_id)
-                .andWhere("payment_token", payment_token)
                 .update({
                     payment_token_active: false
                 })

@@ -83,7 +83,7 @@ module.exports = function (app) {
         mode: "payment",
         line_items: item,
         success_url: `http://localhost:5000/SubscriptionStripe?status=accepted&duration=${duration}&zone_id=${zone_id}&payment_token=${payment_token}`,
-        cancel_url: `http://localhost:5000/SubscriptionStripe?status=rejected&payment_token=${payment_token}`,
+        cancel_url: `http://localhost:5000/SubscriptionStripe?status=rejected`,
       })
       res.json([200, session.url])
     } catch (e) {
