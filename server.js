@@ -39,8 +39,8 @@ const rideEnded = require('./routes/private/user_rides/simulate_ride_end');
 const user_senior_requests = require('./routes/private/user_requests/user_senior_request');
 const admin_manage_senior_requests = require('./routes/private/admin_manage_requests/admin_manage_senior_requests');
 const admin_manage_refund_requests = require('./routes/private/admin_manage_requests/admin_manage_refund_requests');
-const get_senior_requests =require('./routes/private/admin_manage_requests/get_senior_requests');
-const get_refund_requests =require('./routes/private/admin_manage_requests/get_refund_requests');
+const get_senior_requests = require('./routes/private/admin_manage_requests/get_senior_requests');
+const get_refund_requests = require('./routes/private/admin_manage_requests/get_refund_requests');
 const superadmin_register_admin = require('./routes/private/superAdmin/superAdmin_register_admin');
 const reset_password = require('./routes/private/reset_password/reset_password');
 const subscription_stripe = require('./routes/private/stripe/subscription_stripe');
@@ -55,7 +55,6 @@ user_forgot_password_route(app);
 user_forgot_password_verify_route(app);
 user_forgot_password_new_password_route(app);
 get_current_user(app);
-
 
 app.use(authMiddleware);
 
@@ -86,7 +85,6 @@ reset_password(app);
 subscription_stripe(app);
 ticket_stripe(app);
 cancel_stripe(app);
-
 
 // HANDLE IF WE DID NOT FIND THE ROUTE WE WERE LOOKING FOR
 app.use(function (req, res, next) {
