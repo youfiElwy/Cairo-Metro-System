@@ -87,6 +87,7 @@ subscription_stripe(app);
 ticket_stripe(app);
 cancel_stripe(app);
 
+
 // HANDLE IF WE DID NOT FIND THE ROUTE WE WERE LOOKING FOR
 app.use(function (req, res, next) {
 	return res
