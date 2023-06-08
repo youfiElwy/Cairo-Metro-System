@@ -22,23 +22,23 @@ module.exports = function (app) {
 			return res.status(400).send([400, 'user is already subscribed to an active plan']);
 		}
 
-		const checkToken = await db("users")
-			.where("user_id", user_id)
+		const checkToken = await db('users')
+			.where('user_id', user_id)
 			.andWhere('payment_token_active', true)
-			.andWhere("payment_token", payment_token)
-			.returning("*");
+			.andWhere('payment_token', payment_token)
+			.returning('*');
 
 		if (isEmpty(checkToken)) {
 			return res.status(400).send([400, 'You didnot pay for the subscription']);
 		}
 
-		const updateToken = await db("users")
-			.where("user_id", user_id)
-			.andWhere("payment_token", payment_token)
+		const updateToken = await db('users')
+			.where('user_id', user_id)
+			.andWhere('payment_token', payment_token)
 			.update({
-				payment_token_active: false
+				payment_token_active: false,
 			})
-			.returning("*");
+			.returning('*');
 		updateToken;
 		try {
 			let trans_amount = 0;
@@ -58,10 +58,9 @@ module.exports = function (app) {
 				sub_maxnumberofusages = 400;
 				sub_numberofusages = 400;
 			}
-			if (req.body.zone_id === "2") {
+			if (req.body.zone_id === '2') {
 				trans_amount = trans_amount * 1.2;
-			}
-			else if (req.body.zone_id === "3") {
+			} else if (req.body.zone_id === '3') {
 				trans_amount = trans_amount * 1.5;
 			}
 
