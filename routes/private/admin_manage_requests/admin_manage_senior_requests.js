@@ -1,7 +1,7 @@
 const { isEmpty } = require('lodash');
 const db = require('../../../connectors/db');
 const bodyParser = require('body-parser');
-const getUser = require('../../../routes/public/get_user');
+const GetUser = require('../../../routes/public/get_user');
 // Package for sending emails
 // const sgMail = require('@sendgrid/mail');
 // const SENDGRID_API_KEY = process.env.SEND_GRID_KEY;
@@ -11,17 +11,17 @@ module.exports = function (app) {
 	app.use(bodyParser.json());
 	app.use(bodyParser.urlencoded({ extended: true }));
 	app.put('/api/v1/requests/senior/:requestId', async function (req, res) {
-		const userInfo = await getUser(req);
+		const userInfo = await GetUser(req);
 		const adminId = userInfo.user_id;
 
 		if (userInfo.isSuperAdmin == false && userInfo.isAdmin == false) {
-			return res.status(400).send('Error you are not an admin');
+			return res.status(400).send([400,'Error you are not an admin']);
 		}
 
 		const { requestId } = req.params;
 
 		if (!req.body.request_state) {
-			return res.status(400).send('Error please enter request state');
+			return res.status(400).send([400,'Error please enter request state']);
 		}
 
 		const requestExists = await db
@@ -30,7 +30,7 @@ module.exports = function (app) {
 			.where('request_id', requestId);
 
 		if (isEmpty(requestExists)) {
-			return res.status(400).send('Error : request does not exist');
+			return res.status(400).send([400,'Error : request does not exist']);
 		}
 
 		const requestManaged = await db
@@ -40,7 +40,7 @@ module.exports = function (app) {
 			.andWhere('request_state', 'processing');
 
 		if (isEmpty(requestManaged)) {
-			return res.status(400).send('Error : request already managed');
+			return res.status(400).send([400,'Error : request already managed']);
 		}
 		const getUser = await db.select('*').from('senior_request').where('request_id', requestId);
 		const email = getUser[0].email;
@@ -147,7 +147,7 @@ module.exports = function (app) {
 				// await sgMail.send(rejectedMsg);
 			}
 
-			return res.status(200).json(updateSeniorRequest);
+			return res.status(200).json([200,"Request State Updated"]);
 		} catch (err) {
 			console.log(err.message);
 			return res.status(400).send('Error: Could not accept or reject request');
