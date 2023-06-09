@@ -15,7 +15,7 @@ function verifyPassword(password, hash, salt) {
     const verifyHash = crypto.pbkdf2Sync(password, salt, 1000, 64, 'sha512').toString('hex');
     return verifyHash === hash;
 }
-
+ 
 module.exports = function (app) {
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
