@@ -65,7 +65,7 @@ module.exports = function (app) {
 
 				const newTransaction = {
 					"amount": refundTransaction[0].amount,
-					"transaction_to": "user",
+					"transaction_to": "Refund",
 					"trans_date": new Date(Date.now()),
 					"user_id": refundTransaction[0].user_id
 				};

@@ -47,6 +47,8 @@ const subscription_stripe = require('./routes/private/stripe/subscription_stripe
 const ticket_stripe = require('./routes/private/stripe/ticket_stripe');
 const cancel_stripe = require('./routes/private/stripe/cancel_stripe');
 const get_current_user = require('./routes/public/get_cur_user');
+const get_all_stations = require('./routes/public/getStations');
+const check_price = require('./routes/public/check_price');
 
 // PUBLIC ROUTES
 signup_route(app);
@@ -55,6 +57,8 @@ user_forgot_password_route(app);
 user_forgot_password_verify_route(app);
 user_forgot_password_new_password_route(app);
 get_current_user(app);
+get_all_stations(app);
+check_price(app);
 
 app.use(authMiddleware);
 
