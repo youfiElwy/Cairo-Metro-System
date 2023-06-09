@@ -12,41 +12,41 @@ module.exports = function (app) {
 		const email = userInfo.email;
 
 		if (!req.body.ID_picture_age) {
-			return res.status(400).send('national id is required');
+			return res.status(400).send([400, 'national id is required']);
 		}
 
 		const requestExists = await db
 			.select('*')
 			.from('senior_request')
-			.where('request_state', "processing")
+			.where('request_state', 'processing')
 			.andWhere('user_id', user_id);
 
 		if (!isEmpty(requestExists)) {
-			return res.status(400).send('Error : you already made a senior request');
+			return res.status(401).send([401, 'Error : you already made a senior request']);
 		}
 
 		const alreadySenior = await db
 			.select('*')
 			.from('users')
-			.where('userrole', "senior")
+			.where('userrole', 'senior')
 			.andWhere('user_id', user_id);
 
 		if (!isEmpty(alreadySenior)) {
-			return res.status(400).send('Error : you already already a senior');
+			return res.status(402).send([402, 'Error : you already already a senior']);
 		}
 
 		const senior_request = {
-			request_state: "processing",
+			request_state: 'processing',
 			id_picture_age: req.body.ID_picture_age,
 			user_id: user_id,
 		};
 		console.log(senior_request);
 		try {
 			const senior = await db('senior_request').insert(senior_request).returning('*');
-			return res.status(200).json(senior);
+			return res.status(200).json([200, senior]);
 		} catch (err) {
 			console.log(err.message);
-			return res.status(400).send('Error: Could not send senior request');
+			return res.status(404).send([404, 'Error: Could not send senior request']);
 		}
 	});
 };
