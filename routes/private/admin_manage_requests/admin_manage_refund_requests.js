@@ -11,13 +11,13 @@ module.exports = function (app) {
 		const adminId = userInfo.user_id;
 
 		if (userInfo.isSuperAdmin == false && userInfo.isAdmin == false) {
-			return res.status(400).send('Error you are not an admin');
+			return res.status(400).send([400,'Error you are not an admin']);
 		}
 
 		const { requestId } = req.params;
 
 		if (!req.body.request_state) {
-			return res.status(400).send('Error please enter request state');
+			return res.status(400).send([400,'Error please enter request state']);
 		}
 
 		const requestExists = await db
@@ -26,7 +26,7 @@ module.exports = function (app) {
 			.where('request_id', requestId);
 
 		if (isEmpty(requestExists)) {
-			return res.status(400).send('Error : request doesnot exist');
+			return res.status(400).send([400,'Error : request doesnot exist']);
 		}
 
 		const requestManaged = await db
@@ -36,7 +36,7 @@ module.exports = function (app) {
 			.andWhere('request_state', 'processing');
 
 		if (isEmpty(requestManaged)) {
-			return res.status(400).send('Error : request already managed');
+			return res.status(400).send([400,'Error : request already managed']);
 		}
 
 		const user = await db
@@ -60,23 +60,22 @@ module.exports = function (app) {
 					.select("*")
 					.from("refund_request")
 					.innerJoin('ticket', 'ticket.ticket_id', 'refund_request.ticket_id')
-					.innerJoin('ride', 'ticket.trans_id', 'transactions.trans_id');
+					.innerJoin('transactions', 'ticket.trans_id', 'transactions.trans_id')
+					.where('refund_request.request_id',requestId);
+
 				const newTransaction = {
-					"amount": refundTransaction.amount,
+					"amount": refundTransaction[0].amount,
 					"transaction_to": "user",
-					"trans_date": date,
-					"card_type": refundTransaction.card_type,
-					"credit_card": refundTransaction.credit_card,
-					"holder_name": refundTransaction.holder_name,
-					"user_id": refundTransaction.user_id
+					"trans_date": new Date(Date.now()),
+					"user_id": refundTransaction[0].user_id
 				};
 				const transaction = await db('transactions').insert(newTransaction).returning('*');
 				transaction;
 			}
-			return res.status(200).json(updateRefundRequest);
+			return res.status(200).json([200,"Request State Updated"]);
 		} catch (err) {
 			console.log(err.message);
-			return res.status(400).send('Error: Could not accept or reject request');
+			return res.status(400).send([400,'Error: Could not accept or reject request']);
 		}
 	});
 };
