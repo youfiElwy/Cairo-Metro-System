@@ -1,3 +1,4 @@
+
 Create Table users (
 	user_ID serial,
 	username character varying(30),

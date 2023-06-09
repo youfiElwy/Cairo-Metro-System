@@ -53,48 +53,9 @@ Insert Into transactions Values(DEFAULT, 140000, 'payment','12/31/1999', 'Visa',
 Insert Into transactions Values(DEFAULT, 140000, 'payment','12/31/1999', 'Visa', 2, 'holder1', 1);
 
 
-
--- Insert Into station Values(DEFAULT, 'maadi',     'description1', 6);
--- Insert Into station Values(DEFAULT, 'tagamo3',   'description2', 6);
--- Insert Into station Values(DEFAULT, 'rehaab',    'description3', 6);
--- Insert Into station Values(DEFAULT, '6 Octobar', 'description4', 6);
--- Insert Into station Values(DEFAULT, 'zahraa',    'description5', 6);
-
-
-
--- Insert Into route Values(DEFAULT, 'origin1', 'destination1', 6);
--- Insert Into route Values(DEFAULT, 'origin2', 'destination2', 6);
--- Insert Into route Values(DEFAULT, 'origin3', 'destination3', 6);
--- Insert Into route Values(DEFAULT, 'origin4', 'destination4', 6);
--- Insert Into route Values(DEFAULT, 'origin5', 'destination5', 6);
-
-
--- INSERT INTO possible_routes (origin, destination, number_of_stations, path)
--- VALUES ('final_origin1', 'final_destination1', 6, array_append('{}', 'path'));
-
--- INSERT INTO possible_routes (origin, destination, number_of_stations, path)
--- VALUES ('final_origin2', 'final_destination2', 6, array_append('{}', 'path'));
-
-
-
-Insert Into zones Values(DEFAULT, 1, 10, 16);
-
-
-
-Insert Into subscriptions Values(DEFAULT, 'monthly',   1, 1, 'active', 15, 15,   1);
-Insert Into subscriptions Values(DEFAULT, 'quarterly', 1, 1, 'active', 150, 150, 2);
-Insert Into subscriptions Values(DEFAULT, 'yearly',    1, 1, 'active', 400, 400, 3);
-
-
-
-
-Insert Into ticket Values(DEFAULT, 1, 'active', 1, 1, 1, 1);
-Insert Into ticket Values(DEFAULT, 1, 'expired', 1, 1, 1, 1);
-
-
-
-Insert Into ride Values(DEFAULT, 'upcoming','1999-01-08 04:05:06', '1999-01-08 04:05:06', 1);
-Insert Into ride Values(DEFAULT, 'in_progress','1999-01-08 04:05:06', '1999-01-08 04:05:06', 2);
+Insert Into zones Values(DEFAULT, 1, 9, 5);
+Insert Into zones Values(DEFAULT, 10, 16, 7);
+Insert Into zones Values(DEFAULT, 17, 1000, 10);
 
 
 
@@ -102,6 +63,8 @@ Insert Into senior_request Values(DEFAULT, 'processing', 49, 1);
 Insert Into senior_request Values(DEFAULT, 'processing', 40, 2);
 
 
+Insert Into subscriptions Values(DEFAULT, 'monthly',   1, 1, 'active', 15, 15,   1);
+Insert Into subscriptions Values(DEFAULT, 'quarterly', 1, 1, 'active', 150, 150, 2);
+Insert Into subscriptions Values(DEFAULT, 'yearly',    1, 1, 'active', 400, 400, 3);
 
-Insert Into refund_request Values(DEFAULT, 'processing', 'description', 1, null, 1);
-Insert Into refund_request Values(DEFAULT, 'processing', 'description', 2, null, 2);
+
