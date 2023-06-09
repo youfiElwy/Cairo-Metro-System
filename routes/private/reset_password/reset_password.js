@@ -23,7 +23,7 @@ module.exports = function (app) {
         const userInfo = await getUser(req);
         const user_id = userInfo.user_id;
         const { password, newpassword } = req.body;
-
+console.log( req.body);
         if (!password) {
             // If the password is not present, return an HTTP unauthorized code
             return res.status(400).send('Password is required');

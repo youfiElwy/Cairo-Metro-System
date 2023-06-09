@@ -22,7 +22,7 @@ module.exports = function (app) {
 		// Check if user already exists in the system
 		const userExists = await db.select('*').from('users').where('email', req.body.email);
 		if (!isEmpty(userExists)) {
-			return res.status(400).send([400,'user exists']);
+			return res.status(400).send('user exists');
 		}
 
 		// calculate age
@@ -104,10 +104,10 @@ module.exports = function (app) {
 
 			// await sgMail.send(msg);
 
-			return res.status(200).json([200]);
+			return res.status(200).json(user);
 		} catch (err) {
 			console.log(err.message);
-			return res.status(400).send([400,'Error: Could not register user']);
+			return res.status(400).send('Error: Could not register user');
 		}
 	});
 };

@@ -39,7 +39,7 @@ module.exports = function (app) {
 		}
 
 		if (ticketExists[0].status === 'expired') {
-			return res.status(401).send([401, 'Refund rejected! Ticket already expired/used']);
+			return res.status(400).send('Refund rejected! Ticket already expired/used');
 		}
 
 		const requestExists = await db
@@ -50,8 +50,8 @@ module.exports = function (app) {
 
 		if (!isEmpty(requestExists)) {
 			return res
-				.status(402)
-				.send([402, 'Refund was already requested and is being processed at the moment...']);
+				.status(400)
+				.send('Refund was already requested and is being processed at the moment...');
 		}
 
 		const new_request = {
@@ -117,10 +117,10 @@ module.exports = function (app) {
 
 			// await sgMail.send(msg);
 
-			return res.status(200).send([200, 'Refund request successfully placed']);
+			return res.status(200).send('Refund request successfully placed');
 		} catch (err) {
 			console.log(err.message);
-			return res.status(403).send([403, 'Error: Could not send refund request']);
+			return res.status(400).send('Error: Could not send refund request');
 		}
 	});
 };
