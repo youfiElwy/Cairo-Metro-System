@@ -136,7 +136,7 @@ Create Table ride (
 Create Table senior_request (
 	request_ID serial,
 	request_state character varying(20),
-	ID_picture_age integer,
+	ID_picture_age character(13),
 	
 	admin_ID integer,
 	user_ID integer,
