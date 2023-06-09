@@ -33,11 +33,11 @@ module.exports = function (app) {
             return res.status(400).send('New Password is required');
         }
 
-        if (verifyPassword(password, userInfo.password, userInfo.salt)) {
+        if (!verifyPassword(password, userInfo.password, userInfo.salt)) {
             return res.status(401).send('Password does not match');
         }
 
-        const hash = hashPassword(req.body.password);
+        const hash = hashPassword(req.body.newpassword);
 
         try {
             const updatePass = await db("users")
