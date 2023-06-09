@@ -15,7 +15,7 @@ function verifyPassword(password, hash, salt) {
     const verifyHash = crypto.pbkdf2Sync(password, salt, 1000, 64, 'sha512').toString('hex');
     return verifyHash === hash;
 }
-
+ 
 module.exports = function (app) {
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
@@ -33,11 +33,11 @@ module.exports = function (app) {
             return res.status(400).send('New Password is required');
         }
 
-        if (verifyPassword(password, userInfo.password, userInfo.salt)) {
+        if (!verifyPassword(password, userInfo.password, userInfo.salt)) {
             return res.status(401).send('Password does not match');
         }
 
-        const hash = hashPassword(req.body.password);
+        const hash = hashPassword(req.body.newpassword);
 
         try {
             const updatePass = await db("users")
