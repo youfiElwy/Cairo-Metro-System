@@ -44,8 +44,8 @@ const get_refund_requests = require('./routes/private/admin_manage_requests/get_
 const superadmin_register_admin = require('./routes/private/superAdmin/superAdmin_register_admin');
 const reset_password = require('./routes/private/reset_password/reset_password');
 const subscription_stripe = require('./routes/private/stripe/subscription_stripe');
-const ticket_stripe =require('./routes/private/stripe/ticket_stripe');
-const cancel_stripe =require('./routes/private/stripe/cancel_stripe');
+const ticket_stripe = require('./routes/private/stripe/ticket_stripe');
+const cancel_stripe = require('./routes/private/stripe/cancel_stripe');
 const get_current_user = require('./routes/public/get_cur_user');
 
 // PUBLIC ROUTES
