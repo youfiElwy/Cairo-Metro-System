@@ -10,6 +10,7 @@ module.exports = function (app) {
 	app.get('/get_cur_user', async function (req, res) {
 		const user = await getUser(req);
 
-		return res.status(200).json(user);
+        return res.status(200).json(user);
+	
 	});
 };

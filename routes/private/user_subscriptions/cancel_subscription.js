@@ -18,17 +18,17 @@ module.exports = function (app) {
 			.where('user_id', userId)
 			.andWhere('status', 'active');
 		if (isEmpty(subExists)) {
-			return res.status(401).json([401, 'user is not subscribed to an active plan']);
+			return res.status(400).send('user is not subscribed to an active plan');
 		}
 
 		try {
 			const deleteSub = await db('subscriptions').where('user_id', userId).update({
 				status: 'canceled',
 			});
-			return res.status(200).send([200, 'Subscription successfully canceled']);
+			return res.status(200).send('Subscription successfully canceled');
 		} catch (err) {
 			console.log(err.message);
-			return res.status(402).send([402, 'Error: Could not cancel subscription']);
+			return res.status(400).send('Error: Could not cancel subscription');
 		}
 	});
 };

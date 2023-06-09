@@ -25,8 +25,8 @@ module.exports = {
 		if (!req.headers.token && !req.headers.cookie) {
 			return null;
 		}
+		console.log(req.headers.token);
 		if (req.headers.token !== undefined) {
-			console.log(req.headers.token);
 			const cookies = req.headers.token
 				.split(';')
 				.map(function (cookie) {
@@ -43,7 +43,6 @@ module.exports = {
 			return sessionToken;
 		}
 		else {
-			console.log(req.headers.cookie);
 			const cookies2 = req.headers.cookie
 				.split(';')
 				.map(function (cookie) {
