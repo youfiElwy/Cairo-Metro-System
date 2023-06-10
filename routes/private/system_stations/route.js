@@ -23,44 +23,46 @@ module.exports = function (app) {
       const admin_id = userInfo.user_id;
 
       if (!(userInfo.isSuperAdmin || userInfo.isAdmin)) {
-        return res.status(400).send("Error you are not an admin");
+        return res.status(401).send("Error you are not an admin");
       }
       const { origin, destination, name } = req.body;
+      console.log(req.body);
       // check if there wa a route before
 
       const found = (await db("route").where({ origin, destination }).select())
         .length;
       console.log(found);
-      if (found === 1) {
-        res.status(400).send("This route already exists");
+      if (found.length !== 0) {
+        res.status(402).send("This route already exists");
       }
 
       const found2 = await db
-        .count("*")
+        .select("*")
         .from("station")
         .where({ description: origin });
-      if (found2 === 0) {
-        res.status(400).send("This origin station does not exist");
+      if (found2.length === 0) {
+        res.status(403).send("This origin station does not exist");
       }
-
+      // console.log(found2.length === 0);
       const found3 = await db
-        .count("*")
+        .select("*")
         .from("station")
         .where({ description: destination });
-      if (found3 === 0) {
-        res.status(400).send("This destination station does not exist");
+      if (found3.length === 0) {
+        res.status(404).send("This destination station does not exist");
       }
 
       //prevent  from adding root between the same station
       if (origin == destination) {
-        res.status(400).send("You Can't add an edge between the same nodes");
+        res.status(405).send("You Can't add an edge between the same nodes");
       }
-
-      const newRoute = await db("route")
-        .insert({ origin, destination, name, admin_id })
-        .returning("*");
-      res.json(newRoute);
-      rerun_pricing_algo();
+      if (found.length === 0 && found2.length !== 0 && found3.length !== 0) {
+        const newRoute = await db("route")
+          .insert({ origin, destination, name, admin_id })
+          .returning("*");
+        res.status(200).json(newRoute);
+        rerun_pricing_algo();
+      }
       //   res.send(newStation)
     } catch (error) {
       console.error(error.message);
@@ -74,11 +76,12 @@ module.exports = function (app) {
       const userInfo = await getUser(req);
 
       const admin_id = userInfo.user_id;
-
+      console.log(userInfo);
       if (!(userInfo.isSuperAdmin || userInfo.isAdmin)) {
         return res.status(400).send("Error you are not an admin");
       }
       const { origin, destination, name: new_name } = req.body;
+      console.log(res.body);
       // check if there wa a route before
       const found = await db("route").where({ origin, destination }).first();
 
@@ -101,21 +104,21 @@ module.exports = function (app) {
     try {
       const userInfo = await getUser(req);
       if (!(userInfo.isSuperAdmin || userInfo.isAdmin)) {
-        return res.status(400).send("Error you are not an admin");
+        return res.status(401).send("Error you are not an admin");
       }
       const { origin, destination } = req.body;
       // check if there wa a route before
       const found = await db("route").where({ origin, destination }).first();
 
       if (!found) {
-        return res.status(400).send("This route does not exist");
+        return res.status(402).send("This route does not exist");
       }
 
       await db("route").where({ origin, destination }).del();
 
       rerun_pricing_algo();
 
-      res.send("Route deleted successfully");
+      res.status(200).send("Route deleted successfully");
     } catch (error) {
       console.error(error.message);
     }
