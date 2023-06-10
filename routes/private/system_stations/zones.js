@@ -7,25 +7,17 @@ app.use(cors());
 app.use(express.json());
 const getUser = require("../../public/get_user");
 module.exports = function (app) {
-  app.get("/zones/:id", async (req, res) => {
-    const { id: zoneId } = req.params;
+  app.get("/zones", async (req, res) => {
     const userInfo = await getUser(req);
 
-    const userid = userInfo.user_id;
-
-    // if (!(userInfo.isSuperAdmin ||userInfo.isAdmin) ) {
-    //   return res.status(400).send("Error you are not an admin");
-    // }
+    if (!(userInfo.isSuperAdmin || userInfo.isAdmin)) {
+      return res.status(400).send("Error you are not an admin");
+    }
     try {
-      const zone = await db("zones").where("zone_id", zoneId).first();
-      if (!zone) {
-        res.status(404).json({ error: "Zone not found" });
-      } else {
-        res.json(zone);
-      }
+      const zone = await db("zones");
+      res.status(200).json([200, zone]);
     } catch (error) {
-      console.error("Error executing query", error);
-      res.status(500).json({ error: "Internal server error" });
+      res.status(500).json([200, "error: Internal server error"]);
     }
   });
 
@@ -35,7 +27,7 @@ module.exports = function (app) {
     const adminId = userInfo.user_id;
 
     if (!(userInfo.isSuperAdmin || userInfo.isAdmin)) {
-      return res.status(400).send("Error you are not an admin");
+      return res.status(400).send([400, "Error you are not an admin"]);
     }
     const zoneId = req.params.id;
     const { price } = req.body;
@@ -45,15 +37,11 @@ module.exports = function (app) {
         .where("zone_id", zoneId)
         .update({ price })
         .returning("*");
+      updatedZone;
+      res.json([200, "Zone price Updated"]);
 
-      if (updatedZone.length === 0) {
-        res.status(404).json({ error: "Zone not found" });
-      } else {
-        res.json(updatedZone[0]);
-      }
     } catch (error) {
-      console.error("Error executing query", error);
-      res.status(500).json({ error: "Internal server error" });
+      res.status(500).json([200, "error: Internal server error"]);
     }
   });
 };
