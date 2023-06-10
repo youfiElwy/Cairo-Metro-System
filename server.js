@@ -49,6 +49,8 @@ const cancel_stripe = require('./routes/private/stripe/cancel_stripe');
 const get_current_user = require('./routes/public/get_cur_user');
 const get_all_stations = require('./routes/public/getStations');
 const check_price = require('./routes/public/check_price');
+const get_all_users = require("./routes/private/get_all_users");
+
 
 // PUBLIC ROUTES
 signup_route(app);
@@ -89,7 +91,7 @@ reset_password(app);
 subscription_stripe(app);
 ticket_stripe(app);
 cancel_stripe(app);
-
+get_all_users(app);
 // HANDLE IF WE DID NOT FIND THE ROUTE WE WERE LOOKING FOR
 app.use(function (req, res, next) {
 	return res

@@ -14,7 +14,7 @@ module.exports = function (app) {
 		const userId = user.user_id;
 
 		if (!ticket_id) {
-			return res.status(400).send('Ticket ID is required');
+			return res.status(401).send('Ticket ID is required');
 		}
 
 		const ticketExists = await db
@@ -24,7 +24,7 @@ module.exports = function (app) {
 			.andWhere('user_id', userId);
 
 		if (isEmpty(ticketExists)) {
-			return res.status(400).send('Invalid Ticket');
+			return res.status(402).send('Invalid Ticket');
 		}
 		const rideNotStartedYet = await db
 			.select('*')
@@ -35,7 +35,7 @@ module.exports = function (app) {
 			.whereNotIn('ride.status', ['not_started_yet', 'ended']);
 
 		if (isEmpty(rideNotStartedYet)) {
-			return res.status(400).send('Ride has not started yet or has already ended!');
+			return res.status(403).send('Ride has not started yet or has already ended!');
 		}
 
 		const rideId = rideNotStartedYet[0].ride_id;
@@ -49,7 +49,7 @@ module.exports = function (app) {
 			.returning('*');
 
 		if (isEmpty(updateRideStatus)) {
-			return res.status(400).send('Could not find the Ride in the Database');
+			return res.status(404).send('Could not find the Ride in the Database');
 		}
 
 		const updateTicketStatus = await db('ticket')
