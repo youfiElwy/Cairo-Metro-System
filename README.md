@@ -1,4 +1,2 @@
-# Cairo-Metro-System
-
-This project is done by top G students
-Dieses Projekt wurde von top G studenten gemacht
+# Cairo Metro System
+Cairo Metro System is a web-based application that allows users to reserve and pay for their metro tickets, view their next travels, and for admins to manage the stations, routes, and modify or delete them. The application is built using the PERN stack (PostgreSQL, Express, React, Node.js).
