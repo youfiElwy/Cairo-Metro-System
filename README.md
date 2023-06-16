@@ -2,11 +2,11 @@
 <h1>Cairo Metro System</h1>
    <img src="README_Files/Homepage.png" alt="Alt text" title="Homepage">
    <h3></h3>
+       <h2>Demo</h2>
+        <h4>You can watch a walkthrough of the website from <a href="https://drive.google.com/drive/folders/1G9J6oPhQiX0V36ZfZqRkj2C0ZpatRAyG" target="_blank">Here</a></h4>
     <h2>
     Table of contents
     </h2>
-    <h2>Demo</h2>
-        <h4>You can watch a walkthrough of the website from <a href="https://drive.google.com/drive/folders/1G9J6oPhQiX0V36ZfZqRkj2C0ZpatRAyG" target="_blank">Here</a></h4>
     <h3> 
         <ul>
             <li>Project Title</li>
