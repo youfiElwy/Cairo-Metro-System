@@ -78,6 +78,10 @@
     <br>
     <img src="README_Files/Responsive1.gif" alt="Alt text" title="Responive">
     <br>
+    <h3>Hashed and Salted passwords</h3>
+    <br>
+    <img src="README_Files/HashSalt.png" alt="Alt text" title="Password">
+    <br>
     <h2>Contributers</h2>
         <ul>
             <li>Ahmed Osama <a href="https://github.com/AhmedOsamaAli" target="_blank">Github</a> <a href="https://www.linkedin.com/in/ahmedosamadiab/" target="_blank">Linkedin</a></li>
