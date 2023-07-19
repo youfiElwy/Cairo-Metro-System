@@ -10,9 +10,9 @@ function hashPassword(password) {
 }
 
 // Package for sending emails
-// const sgMail = require('@sendgrid/mail');
-// const SENDGRID_API_KEY = process.env.SEND_GRID_KEY;
-// sgMail.setApiKey(SENDGRID_API_KEY);
+const sgMail = require('@sendgrid/mail');
+const SENDGRID_API_KEY = process.env.SEND_GRID_KEY;
+sgMail.setApiKey(SENDGRID_API_KEY);
 
 module.exports = function (app) {
 	app.use(bodyParser.json());
@@ -22,7 +22,7 @@ module.exports = function (app) {
 		// Check if user already exists in the system
 		const userExists = await db.select('*').from('users').where('email', req.body.email);
 		if (!isEmpty(userExists)) {
-			return res.status(400).send([400,'user exists']);
+			return res.status(400).send([400, 'user exists']);
 		}
 
 		// calculate age
@@ -53,61 +53,61 @@ module.exports = function (app) {
 			const email = req.body.email;
 			const password = req.body.password;
 
-			// const msg = {
-			// 	to: email,
-			// 	from: 'metronoreplystation@gmail.com',
-			// 	subject: 'Welcome to Metro Station',
-			// 	text: "Welcome fellow citizen! It's great to have you here as part of our Metro Station team!",
-			// 	html: `
-			// 	  <html>
-			// 		 <head>
-			// 			<style>
-			// 			  /* Add your custom CSS styles here */
-			// 			  body {
-			// 				 font-family: Arial, sans-serif;
-			// 			  }
-			// 			  .container {
-			// 				 max-width: 600px;
-			// 				 margin: 0 auto;
-			// 				 padding: 20px;
-			// 				 border: 1px solid #ccc;
-			// 				 border-radius: 5px;
-			// 			  }
-			// 			  h1 {
-			// 				 color: #333;
-			// 			  }
-			// 			  p {
-			// 				 margin-bottom: 20px;
-			// 			  }
-			// 			  .button {
-			// 				 display: inline-block;
-			// 				 padding: 10px 20px;
-			// 				 background-color: #007bff;
-			// 				 color: #fff;
-			// 				 text-decoration: none;
-			// 				 border-radius: 5px;
-			// 			  }
-			// 			</style>
-			// 		 </head>
-			// 		 <body>
-			// 			<div class="container">
-			// 			  <h1>Welcome, fellow citizen!</h1>
-			// 			  <p>It's great to have you here as part of our Metro Station team!</p>
-			// 			  <p>Log In at any time using the following credentials!!!</p>
-			// 			  <p>Email: ${email}</p>
-			//  			  <p>Password: ${password}</p>
-			// 			</div>
-			// 		 </body>
-			// 	  </html>
-			// 	`,
-			// };
+			const msg = {
+				to: email,
+				from: 'RetroMetroCenter@gmail.com',
+				subject: 'Welcome to Metro Station',
+				text: "Welcome fellow citizen! It's great to have you here as part of our Metro Station team!",
+				html: `
+				  <html>
+					 <head>
+						<style>
+						  /* Add your custom CSS styles here */
+						  body {
+							 font-family: Arial, sans-serif;
+						  }
+						  .container {
+							 max-width: 600px;
+							 margin: 0 auto;
+							 padding: 20px;
+							 border: 1px solid #ccc;
+							 border-radius: 5px;
+						  }
+						  h1 {
+							 color: #333;
+						  }
+						  p {
+							 margin-bottom: 20px;
+						  }
+						  .button {
+							 display: inline-block;
+							 padding: 10px 20px;
+							 background-color: #007bff;
+							 color: #fff;
+							 text-decoration: none;
+							 border-radius: 5px;
+						  }
+						</style>
+					 </head>
+					 <body>
+						<div class="container">
+						  <h1>Welcome, fellow citizen!</h1>
+						  <p>It's great to have you here as part of our Metro Station team!</p>
+						  <p>Log In at any time using the following credentials!!!</p>
+						  <p>Email: ${email}</p>
+			 			  <p>Password: ${password}</p>
+						</div>
+					 </body>
+				  </html>
+				`,
+			};
 
-			// await sgMail.send(msg);
+			await sgMail.send(msg);
 
 			return res.status(200).json([200]);
 		} catch (err) {
 			console.log(err.message);
-			return res.status(400).send([400,'Error: Could not register user']);
+			return res.status(400).send([400, 'Error: Could not register user']);
 		}
 	});
 };

@@ -39,7 +39,7 @@ module.exports = function (app) {
 
 			const msg = {
 				to: email,
-				from: 'metronoreplystation@gmail.com',
+				from: 'RetroMetroCenter@gmail.com',
 				subject: 'Password Reset',
 				text: `Click the following link to reset your password: ${resetLink}`,
 				html: `
