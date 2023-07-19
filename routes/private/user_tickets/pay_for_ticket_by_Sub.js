@@ -3,6 +3,11 @@ const db = require('../../../connectors/db');
 const bodyParser = require('body-parser');
 const getUser = require('../../../routes/public/get_user');
 
+// Package for sending emails
+const sgMail = require('@sendgrid/mail');
+const SENDGRID_API_KEY = process.env.SEND_GRID_KEY;
+sgMail.setApiKey(SENDGRID_API_KEY);
+
 module.exports = function (app) {
 	app.use(bodyParser.json());
 	app.use(bodyParser.urlencoded({ extended: true }));
@@ -10,6 +15,7 @@ module.exports = function (app) {
 	app.post('/api/v1/payment/subscription/ticket/', async function (req, res) {
 		const user = await getUser(req);
 		const userId = user.user_id;
+		const { email } = user;
 
 		// Get the possible_routes_id from its table using the origin and destination
 		const possibleRoute = await db
@@ -112,6 +118,64 @@ module.exports = function (app) {
 			};
 
 			const newRideEntry = await db('ride').insert(newRide).returning('*');
+
+			const msg = {
+				to: email,
+				from: 'RetroMetroCenter@gmail.com',
+				subject: 'Metro Ticket Purchase Confirmation with Subscription',
+				text: 'Dear valued passenger, thank you for using your Metro subscription to purchase a ticket! We appreciate your continued support.',
+				html: `
+				  <html>
+					 <head>
+						<style>
+						  /* Add your custom CSS styles here */
+						  body {
+							 font-family: Arial, sans-serif;
+						  }
+						  .container {
+							 max-width: 600px;
+							 margin: 0 auto;
+							 padding: 20px;
+							 border: 1px solid #ccc;
+							 border-radius: 5px;
+						  }
+						  h1 {
+							 color: #333;
+						  }
+						  p {
+							 margin-bottom: 20px;
+						  }
+						  .button {
+							 display: inline-block;
+							 padding: 10px 20px;
+							 background-color: #007bff;
+							 color: #fff;
+							 text-decoration: none;
+							 border-radius: 5px;
+						  }
+						</style>
+					 </head>
+					 <body>
+						<div class="container">
+						  <h1>Thank You for Using Your Metro Subscription for Ticket Purchase!</h1>
+						  <p>We want to express our gratitude for being a part of our Metro Station's subscription service. We're thrilled to provide you with a seamless ticketing experience!</p>
+						  <h2>Here are your ticket details:</h2>
+						  <p><strong>Subscription ID:</strong> ${newTicket.sub_id}</p>
+						  <p><strong>Ticket Status:</strong> ${newTicketEntry[0].status}</p>
+						  <p><strong>Origin:</strong> ${newTicketEntry[0].origin}</p>
+						  <p><strong>Destination:</strong> ${newTicketEntry[0].destination}</p>
+						  <p><strong>Zone ID:</strong> ${newTicketEntry[0].zone_id}</p>
+						  <p><strong>Ride Status:</strong> ${newRideEntry[0].status}</p>
+						  <p><strong>Ride Start Time:</strong> ${newRideEntry[0].start_time}</p>
+						  <p><strong>Ride End Time:</strong> ${newRideEntry[0].end_time}</p>
+						  <p>If you have any questions or need further assistance, don't hesitate to reach out to our customer support team. Enjoy your journey with Metro Station!</p>
+						</div>
+					 </body>
+				  </html>
+				`,
+			};
+
+			await sgMail.send(msg);
 
 			return res
 				.status(200)

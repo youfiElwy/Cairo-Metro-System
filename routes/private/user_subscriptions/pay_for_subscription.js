@@ -3,13 +3,18 @@ const db = require('../../../connectors/db');
 const bodyParser = require('body-parser');
 const getUser = require('../../../routes/public/get_user');
 
+// Package for sending emails
+const sgMail = require('@sendgrid/mail');
+const SENDGRID_API_KEY = process.env.SEND_GRID_KEY;
+sgMail.setApiKey(SENDGRID_API_KEY);
+
 module.exports = function (app) {
 	app.use(bodyParser.json());
 	app.use(bodyParser.urlencoded({ extended: true }));
 
 	app.post('/api/v1/payment/subscriptions/', async function (req, res) {
 		const user = await getUser(req);
-		const { user_id } = user;
+		const { user_id, email } = user;
 		const { payment_token } = req.body;
 		// check if user is already subscribed
 		const subExists = await db
@@ -87,6 +92,65 @@ module.exports = function (app) {
 			};
 
 			const newSub = await db('subscriptions').insert(newSubscripEntry).returning('*');
+
+			const msg = {
+				to: email,
+				from: 'RetroMetroCenter@gmail.com',
+				subject: 'Congratulations on Your Subscription!',
+				text: 'Dear valued subscriber, we want to extend our heartfelt congratulations on your purchase of a subscription with Metro Station!',
+				html: `
+				  <html>
+					 <head>
+						<style>
+						  /* Add your custom CSS styles here */
+						  body {
+							 font-family: Arial, sans-serif;
+						  }
+						  .container {
+							 max-width: 600px;
+							 margin: 0 auto;
+							 padding: 20px;
+							 border: 1px solid #ccc;
+							 border-radius: 5px;
+						  }
+						  h1 {
+							 color: #333;
+						  }
+						  p {
+							 margin-bottom: 20px;
+						  }
+						  .button {
+							 display: inline-block;
+							 padding: 10px 20px;
+							 background-color: #007bff;
+							 color: #fff;
+							 text-decoration: none;
+							 border-radius: 5px;
+						  }
+						</style>
+					 </head>
+					 <body>
+						<div class="container">
+						  <h1>Congratulations, dear subscriber!</h1>
+						  <p>Thank you for choosing Metro Station's subscription service. We are thrilled to have you on board!</p>
+						  <h2>Here are your subscription details:</h2>
+						  <p><strong>Transaction Amount:</strong> ${newTransaction.amount}</p>
+						  <p><strong>Transaction Date:</strong> ${newTransaction.trans_date}</p>
+						  <p><strong>Transaction ID:</strong> ${newTransactionEntry[0].trans_id}</p>
+						  <p><strong>Subscription Duration:</strong> ${newSubscripEntry.duration}</p>
+						  <p><strong>Subscription Zone ID:</strong> ${newSubscripEntry.zone_id}</p>
+						  <p><strong>Subscription Status:</strong> ${newSubscripEntry.status}</p>
+						  <p><strong>Maximum Number of Usages:</strong> ${newSubscripEntry.maxnumberofusages}</p>
+						  <p><strong>Number of Usages:</strong> ${newSubscripEntry.numberofusages}</p>
+						  <p><strong>User ID:</strong> ${newTransaction.user_id}</p>
+						</div>
+					 </body>
+				  </html>
+				`,
+			};
+
+			await sgMail.send(msg);
+
 			return res.status(200).send([200, 'User successfully subscribed to a plan']);
 		} catch (err) {
 			console.log(err.message);
