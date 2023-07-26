@@ -4,11 +4,7 @@
 	"description": "This project done by top G students",
 	"main": "server.js",
 	"scripts": {
-		"start": "node server.js",
-		"stReact": "react-scripts start",
-		"build": "react-scripts build",
-		"test": "react-scripts test",
-		"eject": "react-scripts eject"
+		"start": "node server.js"
 	},
 	"repository": {
 		"type": "git",
