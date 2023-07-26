@@ -2,9 +2,9 @@
 	"name": "cairo-metro-system",
 	"version": "1.0.0",
 	"description": "This project done by top G students",
-	"main": "index.js",
+	"main": "server.js",
 	"scripts": {
-		"start": "nodemon server.js",
+		"start": "node server.js",
 		"stReact": "react-scripts start",
 		"build": "react-scripts build",
 		"test": "react-scripts test",
