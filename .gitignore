@@ -11,3 +11,4 @@ TODO.txt
 # Ignore .env file
 .env
 ./connectors/db.js
+.vercel
