@@ -51,6 +51,12 @@ const get_all_stations = require('./routes/public/getStations');
 const check_price = require('./routes/public/check_price');
 const get_all_users = require('./routes/private/get_all_users');
 
+app.use('/health', (req, res) => {
+	return res.status(200).json({
+		status: 'OK',
+	});
+});
+
 // PUBLIC ROUTES
 signup_route(app);
 login_route(app);
