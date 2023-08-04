@@ -4,7 +4,7 @@ const db = require('../../../connectors/db');
 const bodyParser = require('body-parser');
 const getUser = require('../../public/get_user');
 const crypto = require('crypto');
-const stripe = require("stripe")("sk_test_51NFilGFJ1nJmZISKGcm36DxSEkCfPHgGbP44wZnP9hNTQzeHPoSOu7kOpagXhnquESo1SNrbIJI96deIxYyz2mUO00dj0rZfpY")
+const stripe = require("stripe")(process.env.STRIPE_API)
 
 module.exports = function (app) {
   app.use(bodyParser.json());
@@ -82,8 +82,8 @@ module.exports = function (app) {
         payment_method_types: ["card"],
         mode: "payment",
         line_items: item,
-        success_url: `http://localhost:5000/SubscriptionStripe?status=accepted&duration=${duration}&zone_id=${zone_id}&payment_token=${payment_token}`,
-        cancel_url: `http://localhost:5000/SubscriptionStripe?status=rejected`,
+        success_url: `${process.env.FRONTEND}/SubscriptionStripe?status=accepted&duration=${duration}&zone_id=${zone_id}&payment_token=${payment_token}`,
+        cancel_url: `${process.env.FRONTEND}/SubscriptionStripe?status=rejected`,
       })
       res.json([200, session.url])
     } catch (e) {
