@@ -1,4 +1,3 @@
-//api key =pk_test_51NFilGFJ1nJmZISKhot1BWDEmfKT4cNvSYKHwMd3SMb9JktG0bysUzL7SbrYOAcJcXvpSwjPWWlsW5GjA6H2Qx9i00zmPdBKt3
 const { isEmpty } = require('lodash');
 const db = require('../../../connectors/db');
 const bodyParser = require('body-parser');
