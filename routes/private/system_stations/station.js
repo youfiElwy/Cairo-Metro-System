@@ -352,7 +352,9 @@ module.exports = function (app) {
 	async function start() {
 		await loadStationDB();
 		await loadRouteDB();
+		console.log('Bo2somat');
 		await pricing_algorithm();
+		console.log('Bo2somat2');
 		await loadInserts();
 		console.log('start done');
 	}
