@@ -359,7 +359,7 @@ module.exports = function (app) {
 		console.log('start done');
 	}
 	// pricing_algorithm();
-	start();
+	//start();
 };
 // emptyTable("all_possible_pathes")
 // const checkPromisesStatus = () => {
